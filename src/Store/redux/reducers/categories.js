@@ -51,6 +51,7 @@ export const fetchCategories = createAsyncThunk('categories/fetchCategories', as
   return response
 })
 
+
 // Then, handle actions in your reducers:
 const categoriesSlice = createSlice({
   name: 'categories/fetchCategories',
@@ -69,4 +70,4 @@ const categoriesSlice = createSlice({
   }
 });
 
-export default categoriesSlice.reducer
+export default categoriesSlice.reducer;

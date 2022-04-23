@@ -4,14 +4,16 @@ import styled from 'styled-components';
 import { ReactComponent as CartIcon} from './../Assets/cart.svg'
 import { ReactComponent as ArrowUp} from './../Assets/arrow-up.svg'
 import { fetchCategories } from '../Store/redux/reducers/categories';
+import { Link } from 'react-router-dom/cjs/react-router-dom';
 
 const Surface = styled.div`
   display:flex;
-  position : fixed;
+  position : absolute;
   min-height : 80px;
   width: 100%;
   align-items: center;
   padding: 0 80px;
+  background-color:#FFF ;
 `
 
 const Logo = styled.div`
@@ -86,12 +88,11 @@ class Header extends Component {
           </div>
       );
     }else{
-      console.log(this.props.categories.categories)
       return (
         <Surface>
           <Navigation>
             {(this.props.categories.loading=="succeeded")&&this.props.categories.categories.map((item, i)=>{
-              return <p key={i}><a href="#">{item.name}</a></p>
+              return <p key={i}><Link to={{ pathname: `/${item.name}`,state: { products: item.products} }}>{item.name}</Link></p>
             })}
           </Navigation>
           <Logo>
@@ -113,4 +114,4 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-export default (connect(mapStateToProps, { fetchCategories }))(Header);
+export default connect(mapStateToProps, { fetchCategories })(Header);

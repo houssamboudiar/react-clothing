@@ -1,0 +1,20 @@
+import React, { Component } from 'react'
+import styled from 'styled-components';
+import Section from './Section'
+
+const Container = styled.div`
+    height:100vh;
+    padding-top:60px;
+`
+
+export class Home extends Component {
+  render() {
+    return (
+        <Container>
+          <Section />
+        </Container>
+    )
+  }
+}
+
+export default Home

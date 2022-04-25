@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { ReactComponent as CartIcon} from './../Assets/cartwhite.svg'
 
 const Wrap = styled.div`
     background:#FFF;
@@ -16,23 +17,83 @@ const Heading = styled.h2`
     padding-bottom: 40px;
     font-weight: 400;
     size: 42px;
-`;
+    `;
 
+const AddCartButton = styled.button`
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: #FFF;
+    background-color: #5ECE7B;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 52px;
+    height: 52px;
+    position: absolute;
+    bottom: 57px;
+    left: 305px;
+    filter: drop-shadow(0px 4px 11px rgba(29, 31, 34, 0.2));
+    opacity:0 ;
+`
 const ProductCard = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
   padding: 0.5rem;
   background-color: #FFF;
+  &:hover{
+    box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+  }
+  &:hover ${AddCartButton} {
+    opacity: 1;
+  }
 `;
+
+const ProductOutOfStockCard = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  padding: 0.5rem;
+  background-color: #FFF;
+  &:hover{
+    box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+  }
+  opacity:50% ;
+`;
+
+const OutOfStockText = styled.p`
+  font-size:24px ;
+  font-weight:400 ;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`
 
 const ProductImage = styled.img`
   max-width:354px;
   max-height:330px;
   object-fit:scale-down ;
 `
+const ImageContainer = styled.div`
+  position: relative;
+  text-align: center;
+  color: white;
+`
+
+const Content = styled.div`
+  padding: 16px;
+`;
+
+const CartIconStyled = styled(CartIcon)`
+  align-items: center;
+  justify-content: center;
+  width:24px;
+  height:24px;
+`
 
 const ProductName = styled.div`
-  font-weight: 300;
+  font-weight: 200;
   font-size: 18px;
   color: #1D1F22;
   align-items: center;
@@ -73,17 +134,40 @@ class Section extends Component {
           <Heading>{this.props.category}</Heading>
           <Grid>
               {this.props.products.map((item, i)=>{
-                  return  (
+                if(item.inStock){
+                  return(
                     <ProductCard key={i}>
-                      <ProductImage src={item.gallery[0]}/>
-                      <ProductName>
-                        {item.name}
-                      </ProductName>
-                      <ProductPrice>
-                        &#x24;{item.prices[0].amount}
-                      </ProductPrice>
-                    </ProductCard>
-                  )
+                      <ImageContainer>
+                        <ProductImage src={item.gallery[0]}/>
+                      </ImageContainer>                      
+                      <AddCartButton><CartIconStyled /></AddCartButton>
+                      <Content>
+                          <ProductName>
+                            {item.name}
+                          </ProductName>
+                          <ProductPrice>
+                            &#x24;{item.prices[0].amount}
+                          </ProductPrice>
+                      </Content>
+                    </ProductCard>)
+                }else{
+                  return(
+                    <ProductOutOfStockCard key={i}>
+                      <ImageContainer>
+                        <ProductImage src={item.gallery[0]}/>
+                        <OutOfStockText>OUT OF STOCK</OutOfStockText>
+                      </ImageContainer>
+                      <AddCartButton><CartIconStyled /></AddCartButton>
+                      <Content>
+                          <ProductName>
+                            {item.name}
+                          </ProductName>
+                          <ProductPrice>
+                            &#x24;{item.prices[0].amount}
+                          </ProductPrice>
+                      </Content>
+                    </ProductOutOfStockCard>)
+                }
               })}
         </Grid>
         </Wrap>)

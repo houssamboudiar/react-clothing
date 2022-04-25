@@ -13,3 +13,9 @@ body {
 a {
   text-decoration: none;
 }
+
+.selected {
+  border-bottom: 2px solid #5ECE7B;
+  color: #5ECE7B;
+  font-weight: 700;
+}

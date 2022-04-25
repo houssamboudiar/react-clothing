@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ReactComponent as CartIcon} from './../Assets/cart.svg'
 import { ReactComponent as ArrowUp} from './../Assets/arrow-up.svg'
 import { fetchCategories } from '../Store/redux/reducers/categories';
-import { Link } from 'react-router-dom/cjs/react-router-dom';
+import { Link, NavLink } from 'react-router-dom/cjs/react-router-dom';
 
 const Surface = styled.div`
   display:flex;
@@ -32,7 +32,20 @@ const Navigation = styled.div`
     padding: 0 15px;
     line-height: 19.2px;
     flex-wrap: nowrap;
+    &.active{
+      border-bottom: 5px solid red;
+    }
   }
+`
+
+const ItemLink = styled(NavLink)`
+    font-weight: 600, Medium;
+    size: 16px;
+    text-transform: uppercase;
+    padding: 10px 15px 10px 15px;
+    line-height: 57.2px;
+    flex-wrap: nowrap;
+    padding-bottom: 10px;
 `
 
 const Actions = styled.div`
@@ -92,7 +105,7 @@ class Header extends Component {
         <Surface>
           <Navigation>
             {(this.props.categories.loading=="succeeded")&&this.props.categories.categories.map((item, i)=>{
-              return <p key={i}><Link to={{ pathname: `/${item.name}`,state: { products: item.products} }}>{item.name}</Link></p>
+              return <ItemLink activeClassName="selected" key={i} to={{ pathname: `/${item.name}`,state: { products: item.products} }}>{item.name}</ItemLink>
             })}
           </Navigation>
           <Logo>

@@ -8,12 +8,13 @@ import { Link, NavLink } from 'react-router-dom/cjs/react-router-dom';
 
 const Surface = styled.div`
   display:flex;
-  position : absolute;
+  position : fixed;
   min-height : 80px;
   width: 100%;
   align-items: center;
   padding: 0 80px;
   background-color:#FFF ;
+  z-index:10 ;
 `
 
 const Logo = styled.div`
@@ -85,16 +86,8 @@ const ArrowUpStyled = styled(ArrowUp)`
 
 class Header extends Component {
 
-    constructor(props) {
-      super(props);
-    }
-    
-    componentDidMount() {
-      this.props.fetchCategories();
-    }
-
     render() {
-    if (!this.props.categories.loading=="succeeded") {
+    if (!this.props.categories.loading==="succeeded") {
       return (
           <div className="loading">
               <div className="loader"></div>
@@ -104,7 +97,7 @@ class Header extends Component {
       return (
         <Surface>
           <Navigation>
-            {(this.props.categories.loading=="succeeded")&&this.props.categories.categories.map((item, i)=>{
+            {(this.props.categories.loading==="succeeded")&&this.props.categories.categories.map((item, i)=>{
               return <ItemLink activeClassName="selected" key={i} to={{ pathname: `/${item.name}`,state: { products: item.products} }}>{item.name}</ItemLink>
             })}
           </Navigation>
@@ -127,4 +120,4 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchCategories })(Header);
+export default connect(mapStateToProps, null)(Header);

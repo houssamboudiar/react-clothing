@@ -128,7 +128,6 @@ class Section extends Component {
           </div>
       );
       }else{
-        console.log(this.props)
         return (
         <Wrap>
           <Heading>{this.props.category}</Heading>

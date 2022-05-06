@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import Section from './Section'
+import Category from './Category'
 
 const Container = styled.div`
 `
@@ -18,14 +18,14 @@ class Home extends Component {
       } else {
         return (
           <Container>
-            <Section category={this.props.categories.categories[0].name} products={this.props.categories.categories[0].products} />
+            <Category category={this.props.categories.categories[0].name} products={this.props.categories.categories[0].products} />
           </Container>
         )
       }
     } else {
       return (
         <Container>
-          <Section category={this.props.match.params.category} products={this.props.location.state.products} />
+          <Category category={this.props.match.params.category} products={this.props.location.state.products} />
         </Container>
       )
     }

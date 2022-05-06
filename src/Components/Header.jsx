@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { ReactComponent as CartIcon} from './../Assets/cart.svg'
-import { ReactComponent as ArrowUp} from './../Assets/arrow-up.svg'
+import { ReactComponent as CartIcon } from './../Assets/cart.svg'
+import { ReactComponent as ArrowUp } from './../Assets/arrow-up.svg'
 import { fetchCategories } from '../Store/redux/reducers/categories';
 import { Link, NavLink } from 'react-router-dom/cjs/react-router-dom';
+import { fetchCurrencies } from '../Store/redux/reducers/currencies';
+import CurrencySwitcher from './CurrencySwitcher';
 
 const Surface = styled.div`
   display:flex;
@@ -59,10 +61,10 @@ const Actions = styled.div`
   }
 `
 
-const CurrencyDropDown = styled.div`
+export const ActionStyle = styled.div`
   display: flex ;
   align-items: center;
-  padding: 0 15px;
+  padding: 0 10px;
   a {
     font-weight: 600;
     size: 18px;
@@ -80,12 +82,20 @@ const CartIconStyled = styled(CartIcon)`
 `
 
 const ArrowUpStyled = styled(ArrowUp)`
-  height: 15px;
-  width: 10px;
+  line-height: 28.8px;
+  padding-left: 5px;
+  height: 25px;
+  width: 17px;
+  align-items: center;
+  justify-content: center;
 `
 
 class Header extends Component {
 
+    componentDidMount() {
+        this.props.fetchCurrencies()
+    }
+  
     render() {
     if (!this.props.categories.loading==="succeeded") {
       return (
@@ -105,8 +115,12 @@ class Header extends Component {
             <img src='/logo.svg' alt='React Clothing' />
           </Logo>
           <Actions>
-            <CurrencyDropDown><a href="">$</a><ArrowUpStyled/></CurrencyDropDown>
-            <CurrencyDropDown><CartIconStyled/></CurrencyDropDown>
+            <ActionStyle>
+              <CurrencySwitcher currencies={this.props.currencies}/>
+            </ActionStyle>
+            <ActionStyle>
+              <CartIconStyled />
+            </ActionStyle>
           </Actions>
         </Surface>
       )
@@ -116,8 +130,9 @@ class Header extends Component {
 
 const mapStateToProps = (state, props) => {
   return {
-    categories: state.categories
+    categories: state.categories,
+    currencies: state.currencies
   };
 };
-
-export default connect(mapStateToProps, null)(Header);
+// no-unused-vars
+export default connect(mapStateToProps, {fetchCurrencies})(Header);

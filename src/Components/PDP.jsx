@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { ReactComponent as CartIcon} from './../Assets/cartwhite.svg'
+import { ReactComponent as CartIcon } from './../Assets/cartwhite.svg'
 
 const Wrap = styled.div`
     background:#FFF;
@@ -114,70 +114,32 @@ const Grid = styled.div`
   grid-gap: 10px
 `;
 
-class Section extends Component {
+class PDP extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-      if (!this.props.categories.loading=="succeeded") {
-      return (
-          <div className="loading">
-              <div className="loader"></div>
-          </div>
-      );
-      }else{
-        return (
-        <Wrap>
-          <Heading>{this.props.category}</Heading>
-          <Grid>
-              {this.props.products.map((item, i)=>{
-                if(item.inStock){
-                  return(
-                    <ProductCard key={i}>
-                      <ImageContainer>
-                        <ProductImage src={item.gallery[0]}/>
-                      </ImageContainer>                      
-                      <AddCartButton><CartIconStyled /></AddCartButton>
-                      <Content>
-                          <ProductName>
-                            {item.name}
-                          </ProductName>
-                          <ProductPrice>
-                            &#x24;{item.prices[0].amount}
-                          </ProductPrice>
-                      </Content>
-                    </ProductCard>)
-                }else{
-                  return(
-                    <ProductOutOfStockCard key={i}>
-                      <ImageContainer>
-                        <ProductImage src={item.gallery[0]}/>
-                        <OutOfStockText>OUT OF STOCK</OutOfStockText>
-                      </ImageContainer>
-                      <AddCartButton><CartIconStyled /></AddCartButton>
-                      <Content>
-                          <ProductName>
-                            {item.name}
-                          </ProductName>
-                          <ProductPrice>
-                            &#x24;{item.prices[0].amount}
-                          </ProductPrice>
-                      </Content>
-                    </ProductOutOfStockCard>)
-                }
-              })}
-        </Grid>
-        </Wrap>)
-      }
-  }
+    render() {
+        if (!this.props.categories.loading === "succeeded") {
+            return (
+                <div className="loading">
+                    <div className="loader"></div>
+                </div>
+            );
+        } else {
+            return (
+                <Wrap>
+                    <Heading>{this.props.location.state.product.id}</Heading>
+                    <Grid>
+                        <Heading>Nike 3000</Heading>
+                    </Grid>
+                </Wrap>)
+        }
+    }
 };
 
 const mapStateToProps = (state, props) => {
-  return {
-    categories: state.categories,
-  };
+    return {
+        categories: state.categories,
+        currencies: state.currencies,
+    };
 };
 
-export default connect(mapStateToProps, null)(Section);
+export default connect(mapStateToProps, null)(PDP);

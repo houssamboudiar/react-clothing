@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import Cart from './Cart';
 import Category from './Category'
 
 const Container = styled.div`
@@ -8,6 +9,9 @@ const Container = styled.div`
 
 class Home extends Component {
   render() {
+    if (this.props.match.params.category === "cart") {
+      return <Container><Cart /></Container>
+    }
     if (this.props.match.params.category === "all") {
       if (!this.props.categories.categories[0]) {
         return (

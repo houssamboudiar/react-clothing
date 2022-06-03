@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
   font-family: "Raleway",sans-serif;
+  font-family: 'Raleway', sans-serif;
   color: #1D1F22;
   margin: 0;
   padding: 0;
@@ -17,5 +18,5 @@ a {
 .selected {
   border-bottom: 2px solid #5ECE7B;
   color: #5ECE7B;
-  font-weight: 700;
+  font-weight: 600 !important;
 }

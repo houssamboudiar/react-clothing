@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom/cjs/react-router-dom';
+import { NavLink } from 'react-router-dom/cjs/react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as CartIcon} from './../Assets/cartwhite.svg'
 
@@ -98,7 +98,7 @@ const CartIconStyled = styled(CartIcon)`
 `
 
 const ProductName = styled.div`
-  font-weight: 200;
+  font-weight: 300;
   font-size: 18px;
   color: #1D1F22;
   align-items: center;
@@ -106,7 +106,7 @@ const ProductName = styled.div`
 `;
 
 const ProductPrice = styled.div`
-  font-weight: 600;
+  font-weight: 500;
   font-size: 18px;
   color: #1D1F22;
   align-items: center;
@@ -122,13 +122,6 @@ const Grid = styled.div`
 class Category extends Component {
 
   render() {
-      if (!this.props.categories.loading === "succeeded") {
-      return (
-          <div className="loading">
-              <div className="loader"></div>
-          </div>
-      );
-      }else{
         return (
         <Wrap>
           <Heading>{this.props.category}</Heading>
@@ -136,7 +129,7 @@ class Category extends Component {
               {this.props.products.map((item, i)=>{
                 if(item.inStock){
                   return (
-                    <ProductLink to={{ pathname: `/product/${item.id}`, state: { product: item} }} >
+                    <ProductLink key={i} to={{ pathname: `/${this.props.category}/${item.id}`, state: { product: item} }} >
                       <ProductCard key={i}>
                         <ImageContainer>
                           <ProductImage src={item.gallery[0]}/>
@@ -175,7 +168,6 @@ class Category extends Component {
               })}
         </Grid>
         </Wrap>)
-      }
   }
 };
 

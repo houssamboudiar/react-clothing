@@ -8,28 +8,34 @@ const initialState = {
 
 const getAllProductsQuery = `
 {
-       categories{
-              name
-              products{
-                     id
-                     name
-                     inStock
-                     gallery
-                     description
-                     category
-                     attributes{
-                            id
-                            name
-                     }
-                     prices{
-                            currency{
-                                   label
-                            }
-                            amount
-                     }
-                     brand
-              }
-       }
+  categories{
+    name
+    products{
+      id
+      name
+      inStock
+      gallery
+      description
+      category
+      attributes{
+        id
+        name
+        type
+        items{
+          displayValue
+          id
+          value
+        }
+      }
+      prices{
+        currency{
+          label
+        }
+        amount
+      }
+      brand
+    }
+  }
 }
 `
 

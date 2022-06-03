@@ -42,13 +42,16 @@ const Navigation = styled.div`
 `
 
 const ItemLink = styled(NavLink)`
-    font-weight: 600, Medium;
+    font-weight: 400;
     size: 16px;
     text-transform: uppercase;
     padding: 10px 15px 10px 15px;
     line-height: 57.2px;
     flex-wrap: nowrap;
     padding-bottom: 10px;
+`
+
+const CartLink = styled(NavLink)`
 `
 
 const Actions = styled.div`
@@ -63,10 +66,10 @@ const Actions = styled.div`
 
 export const ActionStyle = styled.div`
   display: flex ;
+  position: relative ;
   align-items: center;
-  padding: 0 10px;
+  padding: 0 2px;
   a {
-    font-weight: 600;
     size: 18px;
     text-transform: uppercase;
     padding: 0 15px;
@@ -77,6 +80,8 @@ export const ActionStyle = styled.div`
 `
 
 const CartIconStyled = styled(CartIcon)`
+  display: block;
+  text-align: center;
   align-items: center;
   justify-content: center;
 `
@@ -89,6 +94,25 @@ const ArrowUpStyled = styled(ArrowUp)`
   align-items: center;
   justify-content: center;
 `
+
+const CartCounter = styled.button`
+    border: none;
+    font: inherit;
+    color: #fff;
+    background-color: black;
+    cursor: pointer;
+    position: absolute;
+    bottom: 12px;
+    height: 24px;
+    width: 24px;
+    left: 22px;
+    border-radius: 100%;
+    display: inline-flex;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+`;
 
 class Header extends Component {
 
@@ -119,7 +143,8 @@ class Header extends Component {
               <CurrencySwitcher currencies={this.props.currencies}/>
             </ActionStyle>
             <ActionStyle>
-              <CartIconStyled />
+              <CartLink to={{ pathname: `/cart` }}><CartIconStyled /></CartLink>
+              {this.props.cart.counter!==0&&<CartCounter>{ this.props.cart.counter }</CartCounter>}
             </ActionStyle>
           </Actions>
         </Surface>
@@ -131,7 +156,8 @@ class Header extends Component {
 const mapStateToProps = (state, props) => {
   return {
     categories: state.categories,
-    currencies: state.currencies
+    currencies: state.currencies,
+    cart: state.cart,
   };
 };
 // no-unused-vars

@@ -28,7 +28,7 @@ const SwitcherButton = styled.button`
   background-color: #FFF;
   border: none;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 15px;
   text-transform: uppercase;
   line-height: 28.8px;
@@ -44,6 +44,7 @@ const Container = styled.div`
 
 
 const Currency = styled.div`
+    font-weight:500 !important;
     padding: 5px 10px;
     cursor: pointer;
     &:hover{

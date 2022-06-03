@@ -6,6 +6,7 @@ import Home from './Components/Home';
 import { store } from './Store/store';
 import {fetchCategories} from './Store/redux/reducers/categories';
 import PDP from './Components/PDP';
+import Cart from './Components/Cart';
 
 
 export default class App extends Component {
@@ -26,9 +27,11 @@ export default class App extends Component {
         <Router>
           <div id="root" >
             <Header />
-            <Route exact path="/"><Redirect to={{pathname:'/all'}} component={Home}  /></Route>
+            <Route path="/">
+              <Redirect to={{ pathname: '/all' }} component={Home} />
+            </Route>
             <Route exact path="/:category" component={Home} />
-            <Route exact path="/product/:id" component={PDP} />
+            <Route path="/:category/:id" component={PDP} />
           </div>
         </Router>
       )

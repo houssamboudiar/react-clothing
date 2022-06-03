@@ -34,10 +34,6 @@ export const fetchCurrencies = createAsyncThunk('currencies/fetchCurrencies', as
   return response
 })
 
-export const setCurrent = () => {
-
-}
-
 // Then, handle actions in your reducers:
 const currenciesSlice = createSlice({
   name: 'currencies',

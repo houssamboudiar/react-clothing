@@ -95,7 +95,7 @@ const NextImage = styled.button`
   bottom: 16px;
   left: 152px;
   height: 24px;
-  opacity: ${(props) => (props.disabled ? 0.7 : 1)};
+  opacity: ${(props) => (props.disabled ? 0.3 : 1)};
 `;
 
 const ImageArrowIcon = styled(ImageArrow)`
@@ -111,13 +111,12 @@ class CartItem extends Component {
     counter:0,
   };
   render() {
-    console.log(this.props.product)
     return (
       <Item>
         <Grid>
           <Row>
             <Details>
-              <ProductDetails product={this.props.product} priceCart={true} />
+              <ProductDetails product={this.props.product} isCart={true} />
             </Details>
             <ProductQuantity product={this.props.product} />
             <Preview>
@@ -126,7 +125,9 @@ class CartItem extends Component {
                   src={this.props.product.gallery[this.state.counter]}
                 />
                 <NextImage
-                  disabled={this.state.counter === this.state.imageCount - 1}
+                  disabled={
+                    this.state.counter === this.state.imageCount - 1
+                  }
                   onClick={() => {
                     console.log(this.state.counter);
                     this.setState((state) => {
@@ -137,7 +138,7 @@ class CartItem extends Component {
                   <ImageArrowIcon />
                 </NextImage>
                 <PreviousImage
-                  disabled={this.state.counter === 0}
+                  disabled={this.state.counter === 0 }
                   onClick={() => {
                     this.setState((state) => {
                       return { counter: this.state.counter - 1 };

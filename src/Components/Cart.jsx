@@ -31,7 +31,7 @@ const OrderInfo = styled.div`
 `;
 
 const OrderText = styled.h4`
-  display:flex;
+  display: flex;
   font-size: 24px;
   font-weight: 400;
   padding-bottom: 8px;
@@ -56,11 +56,11 @@ const OrderStats = styled.h4`
 
 class Cart extends Component {
   state = {
-    total: 0,
+    total: this.props.cart.total,
     tax: 0,
   };
+
   render() {
-    console.log(this.props.cart)
     return (
       <Wrap>
         <Heading>CART</Heading>
@@ -68,12 +68,15 @@ class Cart extends Component {
           return <CartItem product={item} key={i} />;
         })}
         <OrderInfo>
-          <OrderText>Tax 21%:</OrderText>
-          <OrderStats>{this.state.tax}</OrderStats>
-          <OrderText>Quantity:</OrderText>
-          <OrderStats>{this.props.cart.counter}</OrderStats>
-          <OrderText>Total:</OrderText>
-          <OrderStats>{this.state.total}</OrderStats>
+          <OrderText>
+            Tax 21%: {this.props.currencies.currentCurrency.symbol}{" "}
+            {((this.props.cart.total * 21) / 100).toFixed(2)}
+          </OrderText>
+          <OrderText>Quantity: {this.props.cart.counter}</OrderText>
+          <OrderText>
+            Total: {this.props.currencies.currentCurrency.symbol}
+            {this.props.cart.total.toFixed(2)}
+          </OrderText>
           <OrderButton>ORDER</OrderButton>
         </OrderInfo>
       </Wrap>
@@ -84,6 +87,7 @@ class Cart extends Component {
 const mapStateToProps = (state, props) => {
   return {
     cart: state.cart,
+    currencies: state.currencies,
   };
 };
 

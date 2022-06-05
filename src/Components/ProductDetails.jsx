@@ -40,7 +40,7 @@ class CartItem extends Component {
         <OrderSection>
           <Heading>{this.props.product.brand}</Heading>
           <Subheading>{this.props.product.name}</Subheading>
-          {this.props.priceCart && (
+          {this.props.isCart && (
             <PriceValue>
               {this.props.currencies.currentCurrency.symbol}
               {
@@ -54,7 +54,7 @@ class CartItem extends Component {
           )}
         </OrderSection>
         {this.props.product.attributes.map((item, i) => {
-          return <Attribute key={i} attribute={item} />;
+          return <Attribute key={i} attribute={item} isCart={this.props.isCart} />;
         })}
         {this.props.pricePDP}
       </Order>

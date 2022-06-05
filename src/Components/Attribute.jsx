@@ -26,37 +26,48 @@ const ProductPrice = styled.div`
 
 const Items = styled.div``;
 
-const SizeItem = styled.button.attrs((props: { selected: boolean }) => props)`
+const SizeItem = styled.button.attrs(
+  (props: { selected: boolean, disabled: boolean }) => props
+)`
   background: none;
   padding: 0;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
   outline: inherit;
   width: 63px;
   height: 45px;
   border: 1px solid black;
   color: ${(props) => (props.selected ? "white" : "black")};
   background-color: ${(props) => (props.selected ? "black" : "white")};
+  opacity: ${(props) => (props.disabled ? 0.8 : 1)};
   font-family: "Source Sans Pro", sans-serif;
   font-size: 16px;
   font-weight: 400;
   margin-right: 12px;
   &:hover {
-    color: white;
-    background-color: black;
+    color: ${(props) =>
+      props.disabled ? (props.selected ? "white" : "black") : "white"};
+    background-color: ${(props) =>
+      props.disabled ? (props.selected ? "black" : "white") : "black"};
+
+    /* color: ${(props) =>
+      props.selected && props.disabled ? "white" : "black"};
+    background-color: ${(props) =>
+      props.selected && props.disabled ? "black" : "white"}; */
   }
 `;
 
 const Swatch = styled.button.attrs(
-  (props: { selected: boolean, color: string }) => props
+  (props: { selected: boolean, disabled: boolean, color: string }) => props
 )`
   background: none;
   padding: 0;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
   outline: inherit;
   width: 32px;
   height: 32px;
   border: 1px solid white;
   outline: ${(props) => (props.selected ? "1px solid #5ECE7B" : "none")};
+  opacity: ${(props) => (props.disabled ? 0.8 : 1)};
   background-color: ${(props) => props.color};
   font-family: "Source Sans Pro", sans-serif;
   font-size: 16px;
@@ -67,13 +78,13 @@ const Swatch = styled.button.attrs(
 //Helper
 var hasNumber = /\d/;
 
-function selectAttribute(id ,attribute){
+function selectAttribute(id, attribute) {
   const clone = JSON.parse(JSON.stringify(attribute));
   clone.items.map((l, index) => {
-      return l.id === id ? (l.selected = true) : (l.selected = false);
-  })
+    return l.id === id ? (l.selected = true) : (l.selected = false);
+  });
   return clone;
-};
+}
 
 function updateProductAttribute(updatedAttribute, product) {
   const clone = JSON.parse(JSON.stringify(product));
@@ -83,7 +94,7 @@ function updateProductAttribute(updatedAttribute, product) {
     }
   });
   return clone;
-};
+}
 
 class Attribute extends Component {
   state = {
@@ -97,7 +108,6 @@ class Attribute extends Component {
 
   render() {
     if (this.props.attribute.id === "Size") {
-      console.log(this.state.attribute);
       return (
         <OrderSection>
           <AttributeName>{this.props.attribute.name}:</AttributeName>
@@ -107,7 +117,14 @@ class Attribute extends Component {
                 <SizeItem
                   key={item.id}
                   onClick={() => {
-                    store.dispatch(setProduct(updateProductAttribute(selectAttribute(item.id, this.state.attribute), this.props.product.product)));
+                    store.dispatch(
+                      setProduct(
+                        updateProductAttribute(
+                          selectAttribute(item.id, this.state.attribute),
+                          this.props.product.product
+                        )
+                      )
+                    );
                     this.setState((state) => {
                       return {
                         selectedAttribute: {
@@ -119,9 +136,12 @@ class Attribute extends Component {
                       };
                     });
                   }}
+                  disabled={this.props.isCart}
                   selected={
-                    item.displayValue ===
-                    this.state.selectedAttribute.displayValue
+                    this.props.isCart
+                      ? item.selected
+                      : item.displayValue ===
+                        this.state.selectedAttribute.displayValue
                   }
                 >
                   {hasNumber.test(item.displayValue) && item.displayValue}
@@ -171,9 +191,12 @@ class Attribute extends Component {
                       };
                     });
                   }}
+                  disabled={this.props.isCart}
                   selected={
-                    item.displayValue ===
-                    this.state.selectedAttribute.displayValue
+                    this.props.isCart
+                      ? item.selected
+                      : item.displayValue ===
+                        this.state.selectedAttribute.displayValue
                   }
                   color={item.value}
                 ></Swatch>
@@ -193,20 +216,31 @@ class Attribute extends Component {
                 <SizeItem
                   key={item.id}
                   onClick={() => {
+                    store.dispatch(
+                      setProduct(
+                        updateProductAttribute(
+                          selectAttribute(item.id, this.state.attribute),
+                          this.props.product.product
+                        )
+                      )
+                    );
                     this.setState((state) => {
-                      console.log(state.selectedAttribute);
                       return {
                         selectedAttribute: {
                           id: this.props.attribute.id,
                           displayValue: item.displayValue,
                           value: item.value,
                         },
+                        attribute: selectAttribute(item.id, state.attribute),
                       };
                     });
                   }}
+                  disabled={this.props.isCart}
                   selected={
-                    item.displayValue ==
-                    this.state.selectedAttribute.displayValue
+                    this.props.isCart
+                      ? item.selected
+                      : item.displayValue ===
+                        this.state.selectedAttribute.displayValue
                   }
                 >
                   {hasNumber.test(item.displayValue) && item.displayValue}
@@ -249,9 +283,12 @@ class Attribute extends Component {
                       };
                     });
                   }}
+                  disabled={this.props.isCart}
                   selected={
-                    item.displayValue ===
-                    this.state.selectedAttribute.displayValue
+                    this.props.isCart
+                      ? item.selected
+                      : item.displayValue ===
+                        this.state.selectedAttribute.displayValue
                   }
                 >
                   {item.displayValue.toUpperCase()}

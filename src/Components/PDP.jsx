@@ -155,6 +155,7 @@ class PDP extends Component {
           </ImageContainer>
           <ProductDetails
             product={this.state.product}
+            isCart={false}
             pricePDP={
               <>
                 <OrderSection>
@@ -171,7 +172,7 @@ class PDP extends Component {
                   </PriceValue>
                 </OrderSection>
                 <AddButton
-                  onClick={() => {this.props.addProductCart(this.props.product);console.log(this.props.cart)}}
+                  onClick={() => this.props.addProductCart(this.props.product)}
                 >
                   ADD TO CART
                 </AddButton>

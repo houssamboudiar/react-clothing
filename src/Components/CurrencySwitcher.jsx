@@ -94,7 +94,7 @@ class CurrencyList extends Component {
                       );
                     }}
                   >
-                    <a href="/#">
+                    <a onClick={(e)=>e.preventDefault()} href="/#">
                       {item.symbol} {item.label}
                     </a>
                     <br />

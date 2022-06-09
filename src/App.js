@@ -16,13 +16,13 @@ export default class App extends Component {
     }
     
     render() {
-      if (!store.getState().categories.loading === "succeeded") {
+      if (!store.getState().categories.categories) {
         return (
           <div className="loading">
           <div className="loader"></div>
         </div>
       );
-      } else {
+      }
       return (
         <Router>
           <div id="root" >
@@ -35,6 +35,5 @@ export default class App extends Component {
           </div>
         </Router>
       )
-    }
   }
 }

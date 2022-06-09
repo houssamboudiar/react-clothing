@@ -94,6 +94,7 @@ const OrderInfo = styled.div`
 const Stat = styled.h4`
   font-size: 24px;
   font-weight: 500;
+  width: 125px;
 `;
 
 const StateValue = styled.h4`

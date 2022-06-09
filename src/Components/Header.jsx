@@ -153,13 +153,12 @@ class Header extends Component {
   }
 
   render() {
-    if (!this.props.categories.loading === "succeeded") {
-      return (
-        <div className="loading">
-          <div className="loader"></div>
-        </div>
-      );
-    } else {
+    if (this.props.categories.loading !== "succeeded") {
+              return (
+                <Surface>
+                </Surface>
+              );
+    }
       return (
         <Surface>
           <Navigation>
@@ -216,7 +215,6 @@ class Header extends Component {
           </Actions>
         </Surface>
       );
-    }
   }
 }
 

@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { ReactComponent as CartIcon } from "./../Assets/cartblack.svg";
 import CartItem from "./CartItem";
 import CartOverlayItem from "./CartOverlayItem";
+import { onCheckout } from "../Store/redux/reducers/cart";
+import { setShowCart } from "../Store/redux/reducers/cart";
 
 const Wrap = styled.div`
   background: #fff;
@@ -61,7 +63,12 @@ const BagItems = styled.h4`
 
 const BtnGroup = styled.div`
   padding-top: 32px;
-
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const Checkout = styled.button`
@@ -102,7 +109,6 @@ const ViewBag = styled.button`
   border: 1px solid #1d1f22;
   cursor: pointer;
   font-size: 14px;
-  margin-right: 38px;
   background-color: #fff;
 `;
 
@@ -142,6 +148,17 @@ const EmptyHeading = styled.h1`
   text-align: center;
 `;
 
+const ScrollContainer = styled.div`
+  overflow-y: scroll;
+  max-height: 45vh;
+  padding-left: 18px;
+  padding-right: 9px;
+`;
+
+const ScrollableOverlay = styled.div`
+`;
+
+
 class CartOverlay extends Component {
   render() {
     return (
@@ -155,15 +172,20 @@ class CartOverlay extends Component {
             <Total>, {this.props.cart.counter} items</Total>
           )}
         </CartOverlayHeader>
-        {!this.props.cart.products.length && (
-          <Item>
-            <Total>NO ITEMS IN CART</Total>
-          </Item>
-        )}
-        {this.props.cart.products &&
-          this.props.cart.products.map((item, i) => {
-            return <CartOverlayItem product={item} key={i} />;
-          })}
+        <ScrollContainer>
+          <ScrollableOverlay>
+            {!this.props.cart.products.length && (
+              <Item>
+                <Total>NO ITEMS IN CART</Total>
+              </Item>
+            )}
+            {this.props.cart.products &&
+              this.props.cart.products.map((item, i) => {
+                return <CartOverlayItem product={item} key={i} />;
+              })}
+          </ScrollableOverlay>
+        </ScrollContainer>
+
         <OrderInfo>
           <Total>Total</Total>
           <TotalValue>
@@ -173,10 +195,20 @@ class CartOverlay extends Component {
         </OrderInfo>
         <BtnGroup>
           <ViewBag>
-            <CartLink to={{ pathname: `/cart` }}>VIEW BAG</CartLink>
+            <CartLink
+              onClick={() => this.props.setShowCart(!this.props.cart.showCart)}
+              to={{ pathname: `/cart` }}
+            >
+              VIEW BAG
+            </CartLink>
           </ViewBag>
-          <Checkout>
-            <CheckLink to={{ pathname: `/cart` }}>CHECK OUT</CheckLink>
+          <Checkout onClick={() => this.props.onCheckout()}>
+            <CheckLink
+              onClick={(e) => e.preventDefault()}
+              to={{ pathname: `#` }}
+            >
+              CHECK OUT
+            </CheckLink>
           </Checkout>
         </BtnGroup>
       </Wrap>
@@ -191,4 +223,4 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-export default connect(mapStateToProps, null)(CartOverlay);
+export default connect(mapStateToProps, { onCheckout, setShowCart })(CartOverlay);

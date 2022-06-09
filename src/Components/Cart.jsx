@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom/cjs/react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as CartIcon } from "./../Assets/cartblack.svg";
 import CartItem from "./CartItem";
+import { onCheckout } from "../Store/redux/reducers/cart";
 
 const Wrap = styled.div`
   background: #fff;
@@ -158,4 +159,4 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-export default connect(mapStateToProps, null)(Cart);
+export default connect(mapStateToProps, { onCheckout })(Cart);

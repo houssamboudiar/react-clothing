@@ -59,9 +59,16 @@ const cartSlice = createSlice({
         setShowCart(state, action) {
             state.showCart = action.payload;
         },
+        onCheckout(state, action) {
+            state.products = initialState.products;
+            state.counter = initialState.counter;
+            state.loading = initialState.loading;
+            state.total = initialState.total;
+            state.showCart = initialState.showCart;
+        },
     },
 })
 
-export const { addProductCart, increaseProductQte, decreaseProductQte, setCartCurrency, setShowCart } = cartSlice.actions
+export const { addProductCart, increaseProductQte, decreaseProductQte, setCartCurrency, setShowCart, onCheckout} = cartSlice.actions
 
 export default cartSlice.reducer;

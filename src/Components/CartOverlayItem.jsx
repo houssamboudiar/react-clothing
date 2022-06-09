@@ -8,6 +8,7 @@ import { ReactComponent as ImageArrow } from "./../Assets/image-arrow.svg";
 
 const Item = styled.div`
   padding-top: 32px;
+  white-space: pre;
 `;
 
 const Grid = styled.div``;

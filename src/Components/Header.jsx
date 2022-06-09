@@ -122,6 +122,7 @@ const CartItems = styled.div`
   min-width: 325px;
   min-height: 150px;
   max-height: 500px;
+  max-weight: auto;
   z-index: 1;
   top: 38px;
   left: -350px;

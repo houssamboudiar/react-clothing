@@ -37,6 +37,11 @@ const PriceValue = styled.p.attrs((props: { small: boolean }) => props)`
   padding-bottom: 10px;
 `;
 
+const attr = styled.div`
+    white-space: pre
+`
+
+
 class CartItem extends Component {
   render() {
     return (
@@ -59,11 +64,13 @@ class CartItem extends Component {
             </PriceValue>
           )}
         </OrderSection>
+        <attr>
         {this.props.product.attributes.map((item, i) => {
           return (
             <Attribute key={i} attribute={item} isCart={this.props.isCart} small={this.props.small} />
-          );
-        })}
+            );
+          })}
+        </attr>
         {this.props.pricePDP}
       </Order>
     );

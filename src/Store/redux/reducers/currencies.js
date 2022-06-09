@@ -4,6 +4,7 @@ const initialState = {
   currencies: [],
   currentCurrency: {label:'USD',symbol:'$'},
   loading: 'idle' | 'pending' | 'succeeded' | 'failed',
+  showCurrency: false,
   error: '',
 }
 
@@ -39,8 +40,11 @@ const currenciesSlice = createSlice({
   name: 'currencies',
   initialState,
   reducers: {
-    setCurrency(state, currency) {
-      state.currentCurrency = currency.payload;
+    setCurrency(state, action) {
+      state.currentCurrency = action.payload;
+    },
+    setShowCurrency(state, action) {
+      state.showCurrency = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -56,6 +60,6 @@ const currenciesSlice = createSlice({
   }
 });
 
-export const { setCurrency } = currenciesSlice.actions
+export const { setCurrency, setShowCurrency } = currenciesSlice.actions
 
 export default currenciesSlice.reducer;

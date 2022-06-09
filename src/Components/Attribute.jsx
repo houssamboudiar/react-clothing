@@ -6,12 +6,14 @@ import parse from "html-react-parser";
 import { store } from "../Store/store";
 import { setProduct } from "../Store/redux/reducers/product";
 
-const OrderSection = styled.div``;
+const OrderSection = styled.div`
+    padding-top: 10px ;
+`;
 
-const AttributeName = styled.p`
+const AttributeName = styled.p.attrs((props: { small: boolean }) => props)`
   font-family: "Roboto Condensed", sans-serif;
-  font-weight: 700;
-  font-size: 18px;
+  font-weight: ${(props) => (props.small ? 400 : 700)};
+  font-size: ${(props) => (props.small ? "14px" : "18px")};
   text-transform: uppercase;
   margin-bottom: 8px;
 `;
@@ -27,20 +29,43 @@ const ProductPrice = styled.div`
 const Items = styled.div``;
 
 const SizeItem = styled.button.attrs(
-  (props: { selected: boolean, disabled: boolean }) => props
+  (props: { selected: boolean, disabled: boolean, small: boolean }) => props
 )`
   background: none;
   padding: 0;
   cursor: ${(props) => (props.disabled ? "default" : "pointer")};
   outline: inherit;
-  width: 63px;
-  height: 45px;
+  width: ${(props) => (props.small ? "24px" : "63px")};
+  height: ${(props) => (props.small ? "24px" : "45px")};
   border: 1px solid black;
   color: ${(props) => (props.selected ? "white" : "black")};
   background-color: ${(props) => (props.selected ? "black" : "white")};
   opacity: ${(props) => (props.disabled ? 0.8 : 1)};
   font-family: "Source Sans Pro", sans-serif;
-  font-size: 16px;
+  font-size: ${(props) => (props.small ? "14px" : "16px")};
+  font-weight: 400;
+  margin-right: 12px;
+  &:hover {
+    color: ${(props) => props.disabled ? (props.selected ? "white" : "black") : "white"};
+    background-color: ${(props) => props.disabled ? (props.selected ? "black" : "white") : "black"};
+  }
+`;
+
+const CapacityItem = styled.button.attrs(
+  (props: { selected: boolean, disabled: boolean, small: boolean }) => props
+)`
+  background: none;
+  padding: 0;
+  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
+  outline: inherit;
+  width: ${(props) => (props.small ? "40px" : "63px")};
+  height: ${(props) => (props.small ? "24px" : "45px")};
+  border: 1px solid black;
+  color: ${(props) => (props.selected ? "white" : "black")};
+  background-color: ${(props) => (props.selected ? "black" : "white")};
+  opacity: ${(props) => (props.disabled ? 0.8 : 1)};
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: ${(props) => (props.small ? "14px" : "16px")};
   font-weight: 400;
   margin-right: 12px;
   &:hover {
@@ -48,29 +73,29 @@ const SizeItem = styled.button.attrs(
       props.disabled ? (props.selected ? "white" : "black") : "white"};
     background-color: ${(props) =>
       props.disabled ? (props.selected ? "black" : "white") : "black"};
-
-    /* color: ${(props) =>
-      props.selected && props.disabled ? "white" : "black"};
-    background-color: ${(props) =>
-      props.selected && props.disabled ? "black" : "white"}; */
   }
 `;
 
 const Swatch = styled.button.attrs(
-  (props: { selected: boolean, disabled: boolean, color: string }) => props
+  (props: {
+    selected: boolean,
+    disabled: boolean,
+    color: string,
+    small: boolean,
+  }) => props
 )`
   background: none;
   padding: 0;
   cursor: ${(props) => (props.disabled ? "default" : "pointer")};
   outline: inherit;
-  width: 32px;
-  height: 32px;
+  width: ${(props) => (props.small ? "16px" : "32px")};
+  height: ${(props) => (props.small ? "16px" : "32px")};
   border: 1px solid white;
   outline: ${(props) => (props.selected ? "1px solid #5ECE7B" : "none")};
   opacity: ${(props) => (props.disabled ? 0.8 : 1)};
   background-color: ${(props) => props.color};
   font-family: "Source Sans Pro", sans-serif;
-  font-size: 16px;
+  font-size: ${(props) => (props.small ? "14px" : "16px")};
   font-weight: 400;
   margin-right: 12px;
 `;
@@ -110,11 +135,12 @@ class Attribute extends Component {
     if (this.props.attribute.id === "Size") {
       return (
         <OrderSection>
-          <AttributeName>{this.props.attribute.name}:</AttributeName>
+          <AttributeName small={this.props.small}>{this.props.attribute.name}:</AttributeName>
           <Items>
             {this.props.attribute.items.map((item, i) => {
               return (
                 <SizeItem
+                  small={this.props.small}
                   key={item.id}
                   onClick={() => {
                     store.dispatch(
@@ -165,11 +191,14 @@ class Attribute extends Component {
     if (this.props.attribute.id === "Color") {
       return (
         <OrderSection>
-          <AttributeName>{this.props.attribute.name}:</AttributeName>
+          <AttributeName small={this.props.small}>
+            {this.props.attribute.name}:
+          </AttributeName>
           <Items>
             {this.props.attribute.items.map((item, i) => {
               return (
                 <Swatch
+                  small={this.props.small}
                   key={item.id}
                   onClick={() => {
                     store.dispatch(
@@ -209,11 +238,14 @@ class Attribute extends Component {
     if (this.props.attribute.id === "Capacity") {
       return (
         <OrderSection>
-          <AttributeName>{this.props.attribute.name}:</AttributeName>
+          <AttributeName small={this.props.small}>
+            {this.props.attribute.name}:
+          </AttributeName>
           <Items>
             {this.props.attribute.items.map((item, i) => {
               return (
-                <SizeItem
+                <CapacityItem
+                  small={this.props.small}
                   key={item.id}
                   onClick={() => {
                     store.dispatch(
@@ -244,7 +276,7 @@ class Attribute extends Component {
                   }
                 >
                   {hasNumber.test(item.displayValue) && item.displayValue}
-                </SizeItem>
+                </CapacityItem>
               );
             })}
           </Items>
@@ -257,11 +289,14 @@ class Attribute extends Component {
     ) {
       return (
         <OrderSection>
-          <AttributeName>{this.props.attribute.name}:</AttributeName>
+          <AttributeName small={this.props.small}>
+            {this.props.attribute.name}:
+          </AttributeName>
           <Items>
             {this.props.attribute.items.map((item, i) => {
               return (
                 <SizeItem
+                  small={this.props.small}
                   key={item.id}
                   onClick={() => {
                     store.dispatch(

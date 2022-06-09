@@ -21,21 +21,25 @@ const Heading = styled.h2`
     `;
 
 const AddCartButton = styled.button`
-    padding: 0;
-    border: none;
-    font: inherit;
-    color: #FFF;
-    background-color: #5ECE7B;
-    cursor: pointer;
-    border-radius: 50%;
-    width: 52px;
-    height: 52px;
-    position: absolute;
-    bottom: 57px;
-    left: 305px;
-    filter: drop-shadow(0px 4px 11px rgba(29, 31, 34, 0.2));
-    opacity:0 ;
-`
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: #fff;
+  background-color: #5ece7b;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  position: absolute;
+  bottom: 57px;
+  left: 305px;
+  filter: drop-shadow(0px 4px 11px rgba(29, 31, 34, 0.2));
+  opacity: 0;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+`;
 const ProductCard = styled.div`
   display: flex;
   position: relative;

@@ -6,6 +6,7 @@ const initialState = {
     counter: 0,
     total: 0,
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
+    showCart:false,
 }
 
 function computeCartTotal(products, currencies) {
@@ -51,13 +52,16 @@ const cartSlice = createSlice({
                 state.total = computeCartTotal(state.products, state.currentCurrency)
             };
         },
-        setCartCurrency(state, currency) {
-            state.currentCurrency = currency.payload;
+        setCartCurrency(state, action) {
+            state.currentCurrency = action.payload;
             state.total = computeCartTotal(state.products, state.currentCurrency)
+        },
+        setShowCart(state, action) {
+            state.showCart = action.payload;
         },
     },
 })
 
-export const { addProductCart, increaseProductQte, decreaseProductQte, setCartCurrency } = cartSlice.actions
+export const { addProductCart, increaseProductQte, decreaseProductQte, setCartCurrency, setShowCart } = cartSlice.actions
 
 export default cartSlice.reducer;

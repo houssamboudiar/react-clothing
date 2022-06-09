@@ -7,29 +7,33 @@ const Order = styled.div``;
 
 const OrderSection = styled.div``;
 
-const Heading = styled.h1`
-  font-weight: 600, Semi-bold;
-  font-size: 30px;
+const Heading = styled.h1.attrs((props: { small: boolean }) => props)`
+  font-size: ${(props) => (props.small ? "16px" : "30px")};
+  font-weight: ${(props) => (props.small ? 300 : 600)};
   padding-bottom: 10px;
+  white-space: pre;
 `;
 
-const Subheading = styled.h1`
-  font-weight: 400;
-  font-size: 30px;
+const Subheading = styled.h1.attrs((props: { small: boolean }) => props)`
+  font-size: ${(props) => (props.small ? "16px" : "30px")};
+  font-weight: ${(props) => (props.small ? 300 : 400)};
   padding-bottom: 10px;
+  white-space: pre;
 `;
 
-const AttributeName = styled.p`
+const AttributeName = styled.p.attrs((props: { small: boolean }) => props)`
   font-family: "Roboto Condensed", sans-serif;
-  font-weight: 700;
   font-size: 18px;
+  font-weight: ${(props) => (props.small ? 400 : 700)};
+  font-size: ${(props) => (props.small ? "14px" : "18px")};
   text-transform: uppercase;
   margin-bottom: 8px;
+  white-space: pre;
 `;
 
-const PriceValue = styled.p`
-  font-weight: 700;
-  font-size: 24px;
+const PriceValue = styled.p.attrs((props: { small: boolean }) => props)`
+  font-size: ${(props) => (props.small ? "16px" : "24px")};
+  font-weight: ${(props) => (props.small ? 500 : 700)};
   padding-bottom: 10px;
 `;
 
@@ -38,10 +42,12 @@ class CartItem extends Component {
     return (
       <Order>
         <OrderSection>
-          <Heading>{this.props.product.brand}</Heading>
-          <Subheading>{this.props.product.name}</Subheading>
+          <Heading small={this.props.small}>{this.props.product.brand}</Heading>
+          <Subheading small={this.props.small}>
+            {this.props.product.name}
+          </Subheading>
           {this.props.isCart && (
-            <PriceValue>
+            <PriceValue small={this.props.small}>
               {this.props.currencies.currentCurrency.symbol}
               {
                 this.props.product.prices.filter(
@@ -54,7 +60,9 @@ class CartItem extends Component {
           )}
         </OrderSection>
         {this.props.product.attributes.map((item, i) => {
-          return <Attribute key={i} attribute={item} isCart={this.props.isCart} />;
+          return (
+            <Attribute key={i} attribute={item} isCart={this.props.isCart} small={this.props.small} />
+          );
         })}
         {this.props.pricePDP}
       </Order>

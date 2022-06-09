@@ -7,7 +7,6 @@ import ProductQuantity from "./ProductQuantity";
 import { ReactComponent as ImageArrow } from "./../Assets/image-arrow.svg";
 
 const Item = styled.div`
-  border-top: solid 1px #e5e5e5;
   padding-top: 32px;
 `;
 
@@ -23,7 +22,8 @@ const Details = styled.div`
 `;
 
 const Quantity = styled.div`
-  padding-right:24px;
+  flex: 0.5;
+  padding-right: 24px;
 `;
 
 const Preview = styled.div`
@@ -55,12 +55,12 @@ const Images = styled.div`
 `;
 
 const ProductImage = styled.img`
-  max-width: 200px;
-  max-height: 288px;
+  max-width: 121px;
+  max-height: 190px;
   object-fit: scale-down;
 `;
 const ImageContainer = styled.div`
-  display:flex ;
+  display: flex;
   position: relative;
   text-align: center;
   flex-grow: 4;
@@ -105,10 +105,10 @@ const ImageArrowIcon = styled(ImageArrow)`
   height: 24px;
 `;
 
-class CartItem extends Component {
+class CartOverlayItem extends Component {
   state = {
     imageCount: this.props.product.gallery.length,
-    counter:0,
+    counter: 0,
   };
   render() {
     return (
@@ -119,36 +119,15 @@ class CartItem extends Component {
               <ProductDetails
                 product={this.props.product}
                 isCart={true}
-                small={false}
+                small={true}
               />
             </Details>
-            <ProductQuantity product={this.props.product} small={false} />
+            <ProductQuantity product={this.props.product} small={true} />
             <Preview>
               <ImageContainer>
                 <ProductImage
                   src={this.props.product.gallery[this.state.counter]}
                 />
-                <NextImage
-                  disabled={this.state.counter === this.state.imageCount - 1}
-                  onClick={() => {
-                    console.log(this.state.counter);
-                    this.setState((state) => {
-                      return { counter: this.state.counter + 1 };
-                    });
-                  }}
-                >
-                  <ImageArrowIcon />
-                </NextImage>
-                <PreviousImage
-                  disabled={this.state.counter === 0}
-                  onClick={() => {
-                    this.setState((state) => {
-                      return { counter: this.state.counter - 1 };
-                    });
-                  }}
-                >
-                  <ImageArrowIcon />
-                </PreviousImage>
               </ImageContainer>
             </Preview>
           </Row>
@@ -164,4 +143,4 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-export default connect(mapStateToProps, null)(CartItem);
+export default connect(mapStateToProps, null)(CartOverlayItem);

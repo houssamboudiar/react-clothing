@@ -21,26 +21,11 @@ const Subheading = styled.h1.attrs((props: { small: boolean }) => props)`
   white-space: pre;
 `;
 
-const AttributeName = styled.p.attrs((props: { small: boolean }) => props)`
-  font-family: "Roboto Condensed", sans-serif;
-  font-size: 18px;
-  font-weight: ${(props) => (props.small ? 400 : 700)};
-  font-size: ${(props) => (props.small ? "14px" : "18px")};
-  text-transform: uppercase;
-  margin-bottom: 8px;
-  white-space: pre;
-`;
-
 const PriceValue = styled.p.attrs((props: { small: boolean }) => props)`
   font-size: ${(props) => (props.small ? "16px" : "24px")};
   font-weight: ${(props) => (props.small ? 500 : 700)};
   padding-bottom: 10px;
 `;
-
-const attr = styled.div`
-    white-space: pre
-`
-
 
 class CartItem extends Component {
   render() {

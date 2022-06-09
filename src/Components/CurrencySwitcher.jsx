@@ -44,8 +44,7 @@ const SwitcherButton = styled.button`
   padding: 0 7px;
 `;
 
-const Container = styled.div`
-`;
+const Container = styled.div``;
 
 const Currency = styled.div`
   font-weight: 500 !important;
@@ -72,14 +71,14 @@ class CurrencyList extends Component {
         {/* rEDUCER cURRENCY vALUE */}
         <SwitcherButton
           onClick={() => {
-            this.props.setShowCurrency(!this.props.currencies.showCurrency)
+            this.props.setShowCurrency(!this.props.currencies.showCurrency);
             this.props.setShowCart(false);
           }}
         >
           {this.props.currencies.currentCurrency.symbol}
           <ArrowUpStyled />
         </SwitcherButton>
-          <SwitcherDiv>
+        <SwitcherDiv>
           {this.props.currencies.showCurrency && (
             <SwitcherContent>
               {this.props.currencies.currencies.map((item, i) => {
@@ -90,18 +89,21 @@ class CurrencyList extends Component {
                     onClick={() => {
                       this.props.setCurrency(item);
                       this.props.setCartCurrency(item);
-                      this.props.setShowCurrency(!this.props.currencies.showCurrency);
+                      this.props.setShowCurrency(
+                        !this.props.currencies.showCurrency
+                      );
                     }}
                   >
-                    <a>
+                    <a href="/#">
                       {item.symbol} {item.label}
                     </a>
                     <br />
                   </Currency>
                 );
               })}
-            </SwitcherContent>)}
-          </SwitcherDiv>
+            </SwitcherContent>
+          )}
+        </SwitcherDiv>
       </Container>
     );
   }
@@ -114,6 +116,9 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-export default connect(mapStateToProps, { setCurrency, setCartCurrency, setShowCurrency, setShowCart })(
-  CurrencyList
-);
+export default connect(mapStateToProps, {
+  setCurrency,
+  setCartCurrency,
+  setShowCurrency,
+  setShowCart,
+})(CurrencyList);

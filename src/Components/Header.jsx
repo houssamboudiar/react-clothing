@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { ReactComponent as CartIcon } from "./../Assets/cart.svg";
-import { ReactComponent as ArrowUp } from "./../Assets/arrow-up.svg";
-import { fetchCategories } from "../Store/redux/reducers/categories";
-import { Link, NavLink } from "react-router-dom/cjs/react-router-dom";
+import { NavLink } from "react-router-dom/cjs/react-router-dom";
 import { fetchCurrencies } from "../Store/redux/reducers/currencies";
 import { setShowCurrency } from "../Store/redux/reducers/currencies";
 import { setShowCart } from "../Store/redux/reducers/cart";
@@ -57,10 +55,6 @@ const ItemLink = styled(NavLink)`
   z-index: 1;
 `;
 
-const CartLink = styled(NavLink)`
-  z-index: 1;
-`;
-
 const Actions = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -79,16 +73,6 @@ export const ActionStyle = styled.div`
 const CartIconStyled = styled(CartIcon)`
   display: block;
   text-align: center;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-`;
-
-const ArrowUpStyled = styled(ArrowUp)`
-  line-height: 28.8px;
-  padding-left: 5px;
-  height: 25px;
-  width: 17px;
   align-items: center;
   justify-content: center;
   z-index: 1;

@@ -26,7 +26,7 @@ const Product = styled.div`
   background-color: blue;
 `;
 
-const OrderInf = styled.div`
+const Order = styled.div`
   border-top: solid 1px #e5e5e5;
   padding-top: 32px;
 `;
@@ -47,6 +47,7 @@ const OrderButton = styled.button`
   color: #fff;
   background-color: #5ece7b;
   cursor: pointer;
+  margin-top:16px ;
 `;
 
 const OrderStats = styled.h4`
@@ -86,26 +87,18 @@ const EmptyHeading = styled.h1`
 `;
 
 const OrderInfo = styled.div`
-  padding-top: 32px;
   display: flex;
-  flex-wrap: nowrap;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
+  padding-top:8px ;
 `;
 
-const Total = styled.h4`
-  font-size: 16px;
+const Stat = styled.h4`
+  font-size: 24px;
   font-weight: 500;
-  padding-bottom: 8px;
-  flex: 6;
 `;
 
-const TotalValue = styled.h4`
-  font-size: 16px;
+const StateValue = styled.h4`
+  font-size: 24px;
   font-weight: 700;
-  padding-bottom: 8px;
 `;
 
 class Cart extends Component {
@@ -128,25 +121,32 @@ class Cart extends Component {
           this.props.cart.products.map((item, i) => {
             return <CartItem product={item} key={i} />;
           })}
-        <OrderInf>
-          <OrderText>
-            Tax 21%:{"      "} {this.props.currencies.currentCurrency.symbol}{" "}
-            {((this.props.cart.total * 21) / 100).toFixed(2)}
-          </OrderText>
-          <OrderText>Quantity: {this.props.cart.counter}</OrderText>
-          <OrderText>
-            Total: {this.props.currencies.currentCurrency.symbol}{" "}
-            {this.props.cart.total.toFixed(2)}
-          </OrderText>
+          <Order>
           <OrderInfo>
-            <Total>Total</Total>
-            <TotalValue>
+            <Stat>Tax 21%: </Stat>
+            <StateValue>
+              {this.props.currencies.currentCurrency.symbol}{" "}
+              {((this.props.cart.total * 21) / 100).toFixed(2)}
+            </StateValue>
+          </OrderInfo>
+
+          <OrderInfo>
+            <Stat>Quantity: </Stat>
+            <StateValue>{this.props.cart.counter}</StateValue>
+          </OrderInfo>
+
+          <OrderInfo>
+            <Stat>Total: </Stat>
+            <StateValue>
               {this.props.currencies.currentCurrency.symbol}
               {this.props.cart.total.toFixed(2)}
-            </TotalValue>
+            </StateValue>
           </OrderInfo>
-          <OrderButton>ORDER</OrderButton>
-        </OrderInf>
+
+          <OrderButton onClick={() => this.props.onCheckout()}>
+            ORDER
+          </OrderButton>
+          </Order>
       </Wrap>
     );
   }

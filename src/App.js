@@ -6,8 +6,6 @@ import Home from './Components/Home';
 import { store } from './Store/store';
 import {fetchCategories} from './Store/redux/reducers/categories';
 import PDP from './Components/PDP';
-import Cart from './Components/Cart';
-
 
 export default class App extends Component {
     

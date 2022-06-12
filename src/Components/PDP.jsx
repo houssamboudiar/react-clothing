@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import parse from 'html-react-parser'
-import Attribute from './Attribute'
 import { addProductCart } from '../Store/redux/reducers/cart';
 import { setProduct } from "../Store/redux/reducers/product";
 import ProductDetails from './ProductDetails';
@@ -51,23 +50,9 @@ const ImageContainer = styled.div`
   color: white;
 `
 
-const Order = styled.div`
-`
-
 const OrderSection = styled.div`
   padding-top: 30px;
 `;
-
-const Heading = styled.h1`
-  font-weight:600,Semi-bold ;
-  font-size:30px ;
-  padding-bottom:10px ;
-`
-
-const Subheading = styled.h1`
-  font-weight:400;
-  font-size:30px ;
-`
 
 const Description = styled.div`
   max-width: 300px;

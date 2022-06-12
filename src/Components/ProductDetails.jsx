@@ -49,13 +49,16 @@ class CartItem extends Component {
             </PriceValue>
           )}
         </OrderSection>
-        <attr>
         {this.props.product.attributes.map((item, i) => {
           return (
-            <Attribute key={i} attribute={item} isCart={this.props.isCart} small={this.props.small} />
-            );
-          })}
-        </attr>
+            <Attribute
+              key={i}
+              attribute={item}
+              isCart={this.props.isCart}
+              small={this.props.small}
+            />
+          );
+        })}
         {this.props.pricePDP}
       </Order>
     );

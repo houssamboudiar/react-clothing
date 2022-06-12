@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import Attribute from "./Attribute";
 import ProductDetails from "./ProductDetails";
 import ProductQuantity from "./ProductQuantity";
 import { ReactComponent as ImageArrow } from "./../Assets/image-arrow.svg";
@@ -22,36 +21,9 @@ const Details = styled.div`
   flex: 5;
 `;
 
-const Quantity = styled.div`
-  padding-right:24px;
-`;
-
 const Preview = styled.div`
   display: flex;
   flex: 1;
-`;
-
-const Heading = styled.h1`
-  font-weight: 600, Semi-bold;
-  font-size: 30px;
-  padding-bottom: 10px;
-`;
-
-const Subheading = styled.h1`
-  font-weight: 400;
-  font-size: 30px;
-`;
-
-const PriceValue = styled.p`
-  font-weight: 700;
-  font-size: 24px;
-`;
-
-const Images = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  flex-grow: 1;
 `;
 
 const ProductImage = styled.img`

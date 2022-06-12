@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { ReactComponent as CartIcon } from "./../Assets/cartwhite.svg";
-import parse from "html-react-parser";
 import { store } from "../Store/store";
 import { setProduct } from "../Store/redux/reducers/product";
 
@@ -16,14 +14,6 @@ const AttributeName = styled.p.attrs((props: { small: boolean }) => props)`
   font-size: ${(props) => (props.small ? "14px" : "18px")};
   text-transform: uppercase;
   margin-bottom: 8px;
-`;
-
-const ProductPrice = styled.div`
-  font-weight: 500;
-  font-size: 18px;
-  color: #1d1f22;
-  align-items: center;
-  padding-left: 5px;
 `;
 
 const Items = styled.div``;

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { NavLink } from "react-router-dom/cjs/react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as CartIcon } from "./../Assets/cartblack.svg";
 import CartItem from "./CartItem";
@@ -22,20 +21,9 @@ const Heading = styled.h1`
   size: 42px;
 `;
 
-const Product = styled.div`
-  background-color: blue;
-`;
-
 const Order = styled.div`
   border-top: solid 1px #e5e5e5;
   padding-top: 32px;
-`;
-
-const OrderText = styled.h4`
-  display: flex;
-  font-size: 24px;
-  font-weight: 400;
-  padding-bottom: 8px;
 `;
 
 const OrderButton = styled.button`
@@ -48,12 +36,6 @@ const OrderButton = styled.button`
   background-color: #5ece7b;
   cursor: pointer;
   margin-top:16px ;
-`;
-
-const OrderStats = styled.h4`
-  padding-left: 10px;
-  font-size: 24px;
-  font-weight: 700;
 `;
 
 const Item = styled.div`

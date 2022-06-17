@@ -10,7 +10,7 @@ import { setShowCart } from "../Store/redux/reducers/cart";
 const SwitcherDiv = styled.div`
   position: relative;
   display: inline - block;
-  z-index: 1;
+  z-index:10;
 `;
 
 const SwitcherContent = styled.div`
@@ -20,8 +20,8 @@ const SwitcherContent = styled.div`
   min-width: 114px;
   box-shadow: 0px 4px 35px 0px rgb(168 172 176 / 19%);
   z-index: 1;
-  top: -7px;
-  left: -48px;
+  top: 24px;
+  left: -60px;
   a {
     size: 18px;
     text-transform: uppercase;
@@ -57,14 +57,37 @@ const Currency = styled.div`
 
 const ArrowUpStyled = styled(ArrowUp)`
   line-height: 28.8px;
-  padding-left: 9px;
-  height: 11px;
-  width: 22px;
+  margin-left: 9px;
+  height: 12px;
+  width: 12px;
   align-items: center;
   justify-content: center;
+  transform: ${(props) => (props.isOpen ? "rotate(0deg)" : "rotate(180deg)")};
 `;
 
 class CurrencyList extends Component {
+
+  constructor(props) {
+    super(props);
+    this.ref = React.createRef();
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+  }
+
+  handleClickOutside(event) {
+    if (this.ref.current && !this.ref.current.contains(event.target)) {
+      this.props.onClickOutside && this.props.onClickOutside();
+      this.props.onClickOutside && console.log("yo it works");
+    }
+  };
+
+  componentDidMount() {
+    document.addEventListener('click', this.handleClickOutside, true);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleClickOutside, true);
+  };
+
   render() {
     return (
       <Container>
@@ -76,7 +99,7 @@ class CurrencyList extends Component {
           }}
         >
           {this.props.currencies.currentCurrency.symbol}
-          <ArrowUpStyled />
+          <ArrowUpStyled isOpen={this.props.currencies.showCurrency} />
         </SwitcherButton>
         <SwitcherDiv>
           {this.props.currencies.showCurrency && (

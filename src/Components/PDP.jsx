@@ -81,13 +81,13 @@ const AddButton = styled.button`
   border: none;
   font: inherit;
   color: #fff;
-  background-color: #5ece7b;
-  cursor: pointer;
+  background-color: ${(props) => (props.disabled ? "#00000036": "#5ece7b")};
+  cursor: ${(props) => (props.disabled ? "default": "pointer")};
   margin-bottom: 40px;
   margin-top: 30px;
 `;
 
-function initProductState(product){
+export function initProductState(product){
   const clone = JSON.parse(JSON.stringify(product));
   clone.attributes.map((e) => (e.items.map((l, index) => {
     return (index===0) ? l.selected = true : l.selected = false;
@@ -141,6 +141,7 @@ class PDP extends Component {
           <ProductDetails
             product={this.state.product}
             isCart={false}
+            inStock={this.state.product.inStock}
             pricePDP={
               <>
                 <OrderSection>
@@ -157,6 +158,7 @@ class PDP extends Component {
                   </PriceValue>
                 </OrderSection>
                 <AddButton
+                  disabled={!this.state.product.inStock}
                   onClick={() => this.props.addProductCart(this.props.product)}
                 >
                   ADD TO CART

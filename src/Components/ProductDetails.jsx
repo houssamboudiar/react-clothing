@@ -55,6 +55,7 @@ class CartItem extends Component {
               key={i}
               attribute={item}
               isCart={this.props.isCart}
+              inStock={this.props.inStock}
               small={this.props.small}
             />
           );

@@ -29,7 +29,7 @@ const DecreaseButton = styled.button`
   opacity: ${(props) => (props.disabled ? 0.3 : 1)};
 `;
 
-const Increase = styled(IncreaseIcon).attrs((props: { small: boolean }) => props)`
+const Increase = styled(IncreaseIcon)`
   display: block;
   text-align: center;
   align-items: center;
@@ -38,7 +38,7 @@ const Increase = styled(IncreaseIcon).attrs((props: { small: boolean }) => props
   width: ${(props) => (props.small ? "24px" : "48px")};
 `;
 
-const Decrease = styled(DecreaseIcon).attrs((props: { small: boolean }) => props)`
+const Decrease = styled(DecreaseIcon)`
   display: block;
   text-align: center;
   align-items: center;
@@ -47,7 +47,7 @@ const Decrease = styled(DecreaseIcon).attrs((props: { small: boolean }) => props
   width: ${(props) => (props.small ? '24px' : '48px')};
 `;
 
-const Counter = styled.h1.attrs((props: { small: boolean }) => props)`
+const Counter = styled.h1`
   font-weight: 400;
   font-size: ${(props) => (props.small ? "16px" : "24px")};
   height: 100%;
@@ -65,16 +65,15 @@ class ProductQuantity extends Component {
             this.props.increaseProductQte(this.props.product);
           }}
         >
-          <Increase small={this.props.small} />
+          <Increase small={+this.props.small} />
         </IncreaseButton>
-        <Counter small={this.props.small}>{this.props.product.qte}</Counter>
+        <Counter small={+this.props.small}>{this.props.product.qte}</Counter>
         <DecreaseButton
-          disabled={this.props.product.qte === 1}
           onClick={() => {
             this.props.decreaseProductQte(this.props.product);
           }}
         >
-          <Decrease small={this.props.small} />
+          <Decrease small={+this.props.small} />
         </DecreaseButton>
       </Quantity>
     );

@@ -152,7 +152,7 @@ class Attribute extends Component {
                       };
                     });
                   }}
-                  disabled={this.props.isCart}
+                  disabled={this.props.isCart || !this.props.inStock}
                   selected={
                     this.props.isCart
                       ? item.selected
@@ -210,7 +210,7 @@ class Attribute extends Component {
                       };
                     });
                   }}
-                  disabled={this.props.isCart}
+                  disabled={this.props.isCart || !this.props.inStock}
                   selected={
                     this.props.isCart
                       ? item.selected
@@ -257,7 +257,7 @@ class Attribute extends Component {
                       };
                     });
                   }}
-                  disabled={this.props.isCart}
+                  disabled={this.props.isCart || !this.props.inStock}
                   selected={
                     this.props.isCart
                       ? item.selected
@@ -308,7 +308,7 @@ class Attribute extends Component {
                       };
                     });
                   }}
-                  disabled={this.props.isCart}
+                  disabled={this.props.isCart || !this.props.inStock}
                   selected={
                     this.props.isCart
                       ? item.selected

@@ -100,7 +100,7 @@ class CartItem extends Component {
                 <ProductImage
                   src={this.props.product.gallery[this.state.counter]}
                 />
-                <NextImage
+                {this.state.imageCount!==1 &&<NextImage
                   disabled={this.state.counter === this.state.imageCount - 1}
                   onClick={() => {
                     console.log(this.state.counter);
@@ -110,8 +110,8 @@ class CartItem extends Component {
                   }}
                 >
                   <ImageArrowIcon />
-                </NextImage>
-                <PreviousImage
+                </NextImage>}
+                {this.state.imageCount!==1 &&<PreviousImage
                   disabled={this.state.counter === 0}
                   onClick={() => {
                     this.setState((state) => {
@@ -120,7 +120,7 @@ class CartItem extends Component {
                   }}
                 >
                   <ImageArrowIcon />
-                </PreviousImage>
+                </PreviousImage>}
               </ImageContainer>
             </Preview>
           </Row>

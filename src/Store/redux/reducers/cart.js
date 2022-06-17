@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-
 const initialState = {
     products: [],
     currentCurrency: { label: 'USD', symbol: '$' },
@@ -40,13 +39,24 @@ const cartSlice = createSlice({
             state.counter++;
             state.total = computeCartTotal(state.products, state.currentCurrency)
         },
+        addProductCategory(state, action) {
+            if (state.products.find((p) => p.id === action.payload.id && JSON.stringify(p.attributes) === JSON.stringify(action.payload.attributes))) {
+                state.products.find((p) => p.id === action.payload.id && JSON.stringify(p.attributes) === JSON.stringify(action.payload.attributes)).qte++
+            } else {
+                const clone = JSON.parse(JSON.stringify(action.payload));
+                clone.qte = 1;
+                state.products.push({ ...clone });
+            }
+            state.counter++;
+            state.total = computeCartTotal(state.products, state.currentCurrency)
+        },
         increaseProductQte(state, action) {
             state.products.find((p) => p.id === action.payload.id && JSON.stringify(p.attributes) === JSON.stringify(action.payload.attributes)).qte++
             state.counter++;
             state.total = computeCartTotal(state.products, state.currentCurrency)
         },
         decreaseProductQte(state, action) {
-            if (state.products.find((p) => p.id === action.payload.id && JSON.stringify(p.attributes) === JSON.stringify(action.payload.attributes)).qte > 1) {
+            if (state.products.find((p) => p.id === action.payload.id && JSON.stringify(p.attributes) === JSON.stringify(action.payload.attributes)).qte > 0) {
                 state.products.find((p) => p.id === action.payload.id && JSON.stringify(p.attributes) === JSON.stringify(action.payload.attributes)).qte--;
                 state.counter--;
                 state.total = computeCartTotal(state.products, state.currentCurrency)
@@ -69,6 +79,6 @@ const cartSlice = createSlice({
     },
 })
 
-export const { addProductCart, increaseProductQte, decreaseProductQte, setCartCurrency, setShowCart, onCheckout} = cartSlice.actions
+export const { addProductCart, addProductCategory, increaseProductQte, decreaseProductQte, setCartCurrency, setShowCart, onCheckout} = cartSlice.actions
 
 export default cartSlice.reducer;

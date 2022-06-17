@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom/cjs/react-router-dom';
 import styled from 'styled-components';
+import { addProductCategory } from '../Store/redux/reducers/cart';
 import { ReactComponent as CartIcon} from './../Assets/cartwhite.svg'
+import { initProductState } from './PDP';
 
 const Wrap = styled.div`
     background:#FFF;
@@ -138,10 +140,12 @@ class Category extends Component {
                         <ImageContainer>
                           <ProductImage src={item.gallery[0]}/>
                         </ImageContainer>                      
-                        <AddCartButton><CartIconStyled /></AddCartButton>
+                        <AddCartButton  onClick={(e)=>{
+                          this.props.addProductCategory(initProductState({...item, qte:1}));
+                          e.preventDefault();}}><CartIconStyled /></AddCartButton>
                         <Content>
                             <ProductName>
-                              {item.name}
+                              {item.brand}{" "}{item.name}
                             </ProductName>
                           <ProductPrice>
                             {this.props.currencies.currentCurrency.symbol}
@@ -152,22 +156,24 @@ class Category extends Component {
                     </ProductLink>)
                 }else{
                   return(
-                    <ProductOutOfStockCard key={i}>
-                      <ImageContainer>
-                        <ProductImage src={item.gallery[0]}/>
-                        <OutOfStockText>OUT OF STOCK</OutOfStockText>
-                      </ImageContainer>
-                      <AddCartButton><CartIconStyled /></AddCartButton>
-                      <Content>
-                          <ProductName>
-                            {item.name}
-                          </ProductName>
-                          <ProductPrice>
-                            {this.props.currencies.currentCurrency.symbol}
-                            {item.prices.filter(x => x.currency.label === this.props.currencies.currentCurrency.label)[0].amount}
-                          </ProductPrice>
-                      </Content>
-                    </ProductOutOfStockCard>)
+                    <ProductLink key={i} to={{ pathname: `/${this.props.category}/${item.id}`, state: { product: item} }} >
+                      <ProductOutOfStockCard key={i}>
+                        <ImageContainer>
+                          <ProductImage src={item.gallery[0]}/>
+                          <OutOfStockText>OUT OF STOCK</OutOfStockText>
+                        </ImageContainer>
+                        <AddCartButton ><CartIconStyled /></AddCartButton>
+                        <Content>
+                            <ProductName>
+                              {item.name}
+                            </ProductName>
+                            <ProductPrice>
+                              {this.props.currencies.currentCurrency.symbol}
+                              {item.prices.filter(x => x.currency.label === this.props.currencies.currentCurrency.label)[0].amount}
+                            </ProductPrice>
+                        </Content>
+                      </ProductOutOfStockCard>
+                    </ProductLink>)
                 }
               })}
         </Grid>
@@ -182,4 +188,4 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-export default connect(mapStateToProps, null)(Category);
+export default connect(mapStateToProps, {addProductCategory})(Category);

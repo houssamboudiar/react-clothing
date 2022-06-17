@@ -109,7 +109,7 @@ const CartItems = styled.div`
   max-weight: auto;
   z-index: 1;
   top: 38px;
-  left: -350px;
+  left: -324px;
   &:hover {
     display: block;
   }
@@ -120,7 +120,7 @@ const CartContainer = styled.div`
   display: inline - block;
   `;
 
-const Overlay = styled.div`
+const OverlayCart = styled.div`
   display: block;
   position: fixed;
   width: 100%;
@@ -133,6 +133,21 @@ const Overlay = styled.div`
   z-index: 0;
   cursor: pointer;
 `;
+
+const OverlayCurrency = styled.div`
+  display: block;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(57, 55, 72, 0.22);
+  z-index: 0;
+  cursor: pointer;
+  opacity:0;
+`;
+
 const CartDrop = styled.button`
   background-color: #fff;
   border: none;
@@ -184,6 +199,13 @@ class Header extends Component {
           <Actions>
             <ActionStyle>
               <CurrencySwitcher currencies={this.props.currencies} />
+              {this.props.currencies.showCurrency && (
+                <OverlayCurrency
+                onClick={() => {
+                  this.props.setShowCurrency(!this.props.currencies.showCurrency);
+                }}
+              ></OverlayCurrency>
+              )}
             </ActionStyle>
             <ActionStyle>
               <CartDrop
@@ -202,11 +224,11 @@ class Header extends Component {
                 )}
               </CartContainer>
               {this.props.cart.showCart && (
-                <Overlay
+                <OverlayCart
                   onClick={() => {
                     this.props.setShowCart(!this.props.cart.showCart);
                   }}
-                ></Overlay>
+                ></OverlayCart>
               )}
               {this.props.cart.counter !== 0 && (
                 <CartCounter>{this.props.cart.counter}</CartCounter>

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { store } from "../Store/store";
-import { setProduct } from "../Store/redux/reducers/product";
+import { store } from "../../Store/store";
+import { setProduct } from "../../Store/redux/reducers/product";
 
 const OrderSection = styled.div`
     padding-top: 10px ;
@@ -93,24 +93,6 @@ const Swatch = styled.button.attrs(
 //Helper
 var hasNumber = /\d/;
 
-function selectAttribute(id, attribute) {
-  const clone = JSON.parse(JSON.stringify(attribute));
-  clone.items.map((l, index) => {
-    return l.id === id ? (l.selected = true) : (l.selected = false);
-  });
-  return clone;
-}
-
-function updateProductAttribute(updatedAttribute, product) {
-  const clone = JSON.parse(JSON.stringify(product));
-  clone.attributes.map((attribute) => {
-    if (attribute.id === updatedAttribute.id) {
-      attribute.items = updatedAttribute.items;
-    }
-  });
-  return clone;
-}
-
 class Attribute extends Component {
   state = {
     selectedAttribute: {
@@ -120,6 +102,25 @@ class Attribute extends Component {
     },
     attribute: this.props.attribute,
   };
+
+  selectAttribute = (id, attribute) => {
+    const clone = JSON.parse(JSON.stringify(attribute));
+    clone.items.map((l, index) => {
+      return l.id === id ? (l.selected = true) : (l.selected = false);
+    });
+    return clone;
+  }
+  
+  updateProductAttribute = (updatedAttribute, product) => {
+    const clone = JSON.parse(JSON.stringify(product));
+    clone.attributes.map((attribute) => {
+      if (attribute.id === updatedAttribute.id) {
+        attribute.items = updatedAttribute.items;
+      }
+      return attribute;
+    });
+    return clone;
+  }
 
   render() {
     if (this.props.attribute.id === "Size") {
@@ -135,8 +136,8 @@ class Attribute extends Component {
                   onClick={() => {
                     store.dispatch(
                       setProduct(
-                        updateProductAttribute(
-                          selectAttribute(item.id, this.state.attribute),
+                        this.updateProductAttribute(
+                          this.selectAttribute(item.id, this.state.attribute),
                           this.props.product.product
                         )
                       )
@@ -148,7 +149,7 @@ class Attribute extends Component {
                           displayValue: item.displayValue,
                           value: item.value,
                         },
-                        attribute: selectAttribute(item.id, state.attribute),
+                        attribute: this.selectAttribute(item.id, state.attribute),
                       };
                     });
                   }}
@@ -193,8 +194,8 @@ class Attribute extends Component {
                   onClick={() => {
                     store.dispatch(
                       setProduct(
-                        updateProductAttribute(
-                          selectAttribute(item.id, this.state.attribute),
+                        this.updateProductAttribute(
+                          this.selectAttribute(item.id, this.state.attribute),
                           this.props.product.product
                         )
                       )
@@ -206,7 +207,7 @@ class Attribute extends Component {
                           displayValue: item.displayValue,
                           value: item.value,
                         },
-                        attribute: selectAttribute(item.id, state.attribute),
+                        attribute: this.selectAttribute(item.id, state.attribute),
                       };
                     });
                   }}
@@ -240,8 +241,8 @@ class Attribute extends Component {
                   onClick={() => {
                     store.dispatch(
                       setProduct(
-                        updateProductAttribute(
-                          selectAttribute(item.id, this.state.attribute),
+                        this.updateProductAttribute(
+                          this.selectAttribute(item.id, this.state.attribute),
                           this.props.product.product
                         )
                       )
@@ -253,7 +254,7 @@ class Attribute extends Component {
                           displayValue: item.displayValue,
                           value: item.value,
                         },
-                        attribute: selectAttribute(item.id, state.attribute),
+                        attribute: this.selectAttribute(item.id, state.attribute),
                       };
                     });
                   }}
@@ -291,8 +292,8 @@ class Attribute extends Component {
                   onClick={() => {
                     store.dispatch(
                       setProduct(
-                        updateProductAttribute(
-                          selectAttribute(item.id, this.state.attribute),
+                        this.updateProductAttribute(
+                          this.selectAttribute(item.id, this.state.attribute),
                           this.props.product.product
                         )
                       )
@@ -304,7 +305,7 @@ class Attribute extends Component {
                           displayValue: item.displayValue,
                           value: item.value,
                         },
-                        attribute: selectAttribute(item.id, state.attribute),
+                        attribute: this.selectAttribute(item.id, state.attribute),
                       };
                     });
                   }}

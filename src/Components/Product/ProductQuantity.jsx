@@ -4,9 +4,9 @@ import styled from "styled-components";
 import {
   increaseProductQte,
   decreaseProductQte,
-} from "../Store/redux/reducers/cart";
-import { ReactComponent as IncreaseIcon } from "./../Assets/plus-square.svg";
-import { ReactComponent as DecreaseIcon } from "./../Assets/minus-square.svg";
+} from "../../Store/redux/reducers/cart";
+import { ReactComponent as IncreaseIcon } from "./../../Assets/plus-square.svg";
+import { ReactComponent as DecreaseIcon } from "./../../Assets/minus-square.svg";
 
 const Quantity = styled.div`
   flex: 0.5;

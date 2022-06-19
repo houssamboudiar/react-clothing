@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
 import { BrowserRouter as Router, Route} from "react-router-dom";
 import Header from './Components/Header';
-import Home from './Components/Home';
 import { store } from './Store/store';
 import {fetchCategories} from './Store/redux/reducers/categories';
-import PDP from './Components/PDP';
+import PDP from './Components/Product/PDP';
+import Cart from './Components/Cart/Cart';
+import Category from './Components/Category/Category';
 
 export default class App extends Component {
     
@@ -17,19 +17,18 @@ export default class App extends Component {
       if (!store.getState().categories.categories) {
         return (
           <div className="loading">
-          <div className="loader"></div>
-        </div>
+            <div className="loader"></div>
+          </div>
       );
       }
       return (
         <Router>
           <div id="root" >
             <Header />
-            <Route path="/">
-              <Redirect to={{ pathname: '/all' }} component={Home} />
-            </Route>
-            <Route exact path="/:category" component={Home} />
-            <Route path="/:category/:id" component={PDP} />
+            <Route exact path="/" to="/products/all" component={props => <Category {...props} category={'all'} />}/>
+            <Route exact path="/products/:category"  component={Category} />
+            <Route path="/product/:category/:id" component={PDP} />
+            <Route path="/cart" component={Cart}/>
           </div>
         </Router>
       )

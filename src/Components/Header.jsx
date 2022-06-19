@@ -6,8 +6,9 @@ import { NavLink } from "react-router-dom/cjs/react-router-dom";
 import { fetchCurrencies } from "../Store/redux/reducers/currencies";
 import { setShowCurrency } from "../Store/redux/reducers/currencies";
 import { setShowCart } from "../Store/redux/reducers/cart";
+import { fetchProductsByCategory } from '../Store/redux/reducers/categories';
 import CurrencySwitcher from "./CurrencySwitcher";
-import CartOverlay from "./CartOverlay";
+import CartOverlay from "./Cart/CartOverlay";
 
 const Surface = styled.div`
   display: flex;
@@ -106,7 +107,7 @@ const CartItems = styled.div`
   min-width: 325px;
   min-height: 150px;
   max-height: 500px;
-  max-weight: auto;
+  max-width: auto;
   z-index: 1;
   top: 38px;
   left: -324px;
@@ -176,6 +177,7 @@ class Header extends Component {
     }
       return (
         <Surface>
+          {/* //Navigation */}
           <Navigation>
             {this.props.categories.loading === "succeeded" &&
               this.props.categories.categories.map((item, i) => {
@@ -183,10 +185,8 @@ class Header extends Component {
                   <ItemLink
                     activeClassName="selected"
                     key={i}
-                    to={{
-                      pathname: `/${item.name}`,
-                      state: { products: item.products },
-                    }}
+                    onClick={()=>this.props.fetchProductsByCategory(item.name)}
+                    to={`/products/${item.name}`}
                   >
                     {item.name}
                   </ItemLink>
@@ -196,6 +196,7 @@ class Header extends Component {
           <Logo>
             <img src="/logo.svg" alt="React Clothing" />
           </Logo>
+          {/* //Actions */}
           <Actions>
             <ActionStyle>
               <CurrencySwitcher currencies={this.props.currencies} />
@@ -252,4 +253,5 @@ export default connect(mapStateToProps, {
   fetchCurrencies,
   setShowCurrency,
   setShowCart,
+  fetchProductsByCategory
 })(Header);

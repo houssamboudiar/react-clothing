@@ -20,6 +20,7 @@ function computeCartTotal(products, currencies) {
                 (x) => x.currency.label === currencies.label
             )[0].amount *
             product.qte;
+        return product;
     });
     return total;
 }

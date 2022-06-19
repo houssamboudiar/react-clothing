@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import ProductDetails from "./ProductDetails";
-import ProductQuantity from "./ProductQuantity";
-import { ReactComponent as ImageArrow } from "./../Assets/image-arrow.svg";
+import ProductDetails from "../Product/ProductDetails";
+import ProductQuantity from "../Product/ProductQuantity";
 
 const Item = styled.div`
   padding-top: 32px;

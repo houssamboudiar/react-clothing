@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import Attribute from "./Attribute";
+import AttributeList from "./AttributeList";
 
 const Order = styled.div``;
 
@@ -49,17 +49,12 @@ class CartItem extends Component {
             </PriceValue>
           )}
         </OrderSection>
-        {this.props.product.attributes.map((item, i) => {
-          return (
-            <Attribute
-              key={i}
-              attribute={item}
+        <AttributeList 
+              attributes={this.props.product.attributes}
               isCart={this.props.isCart}
               inStock={this.props.inStock}
-              small={this.props.small}
-            />
-          );
-        })}
+              small={this.props.small} 
+        />
         {this.props.pricePDP}
       </Order>
     );

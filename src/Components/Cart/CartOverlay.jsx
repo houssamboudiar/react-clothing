@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom/cjs/react-router-dom";
 import styled from "styled-components";
-import { ReactComponent as CartIcon } from "./../Assets/cartblack.svg";
-import CartOverlayItem from "./CartOverlayItem";
-import { onCheckout } from "../Store/redux/reducers/cart";
-import { setShowCart } from "../Store/redux/reducers/cart";
+import { onCheckout } from "../../Store/redux/reducers/cart";
+import { setShowCart } from "../../Store/redux/reducers/cart";
+import CartOverlayItemList from "./CartOverlayItemList";
 
 const Wrap = styled.div`
   background: #fff;
@@ -95,28 +94,6 @@ const ViewBag = styled.button`
   background-color: #fff;
 `;
 
-const Item = styled.div`
-  padding-top: 42px;
-  padding-bottom: 10px;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ScrollContainer = styled.div`
-  overflow-y: scroll;
-  max-height: 45vh;
-  padding-left: 18px;
-  padding-right: 9px;
-`;
-
-const ScrollableOverlay = styled.div`
-`;
-
-
 class CartOverlay extends Component {
   render() {
     return (
@@ -130,19 +107,8 @@ class CartOverlay extends Component {
             <Total>, {this.props.cart.counter} items</Total>
           )}
         </CartOverlayHeader>
-        <ScrollContainer>
-          <ScrollableOverlay>
-            {!this.props.cart.products.length && (
-              <Item>
-                <Total>NO ITEMS IN CART</Total>
-              </Item>
-            )}
-            {this.props.cart.products &&
-              this.props.cart.products.map((item, i) => {
-                return <CartOverlayItem product={item} key={i} />;
-              })}
-          </ScrollableOverlay>
-        </ScrollContainer>
+
+        <CartOverlayItemList />
 
         <OrderInfo>
           <Total>Total</Total>
@@ -151,6 +117,7 @@ class CartOverlay extends Component {
             {this.props.cart.total.toFixed(2)}
           </TotalValue>
         </OrderInfo>
+
         <BtnGroup>
           <ViewBag>
             <CartLink

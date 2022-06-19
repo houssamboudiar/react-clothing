@@ -1,25 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import ProductDetails from "./ProductDetails";
-import ProductQuantity from "./ProductQuantity";
-import { ReactComponent as ImageArrow } from "./../Assets/image-arrow.svg";
-
-const Item = styled.div`
-  border-top: solid 1px #e5e5e5;
-  padding-top: 32px;
-`;
-
-const Grid = styled.div``;
-
-const Row = styled.div`
-  display: flex;
-  padding-bottom: 30px;
-`;
-
-const Details = styled.div`
-  flex: 5;
-`;
+import { ReactComponent as ImageArrow } from "./../../Assets/image-arrow.svg";
 
 const Preview = styled.div`
   display: flex;
@@ -77,55 +59,43 @@ const ImageArrowIcon = styled(ImageArrow)`
   height: 24px;
 `;
 
-class CartItem extends Component {
+class ItemImageSection extends Component {
+
   state = {
-    imageCount: this.props.product.gallery.length,
+    imageCount: this.props.gallery.length,
     counter:0,
   };
+
   render() {
     return (
-      <Item>
-        <Grid>
-          <Row>
-            <Details>
-              <ProductDetails
-                product={this.props.product}
-                isCart={true}
-                small={false}
-              />
-            </Details>
-            <ProductQuantity product={this.props.product} small={false} />
-            <Preview>
-              <ImageContainer>
+        <Preview>
+            <ImageContainer>
                 <ProductImage
-                  src={this.props.product.gallery[this.state.counter]}
+                    src={this.props.gallery[this.state.counter]}
                 />
                 {this.state.imageCount!==1 &&<NextImage
-                  disabled={this.state.counter === this.state.imageCount - 1}
-                  onClick={() => {
+                    disabled={this.state.counter === this.state.imageCount - 1}
+                    onClick={() => {
                     console.log(this.state.counter);
                     this.setState((state) => {
-                      return { counter: this.state.counter + 1 };
+                        return { counter: this.state.counter + 1 };
                     });
-                  }}
+                    }}
                 >
-                  <ImageArrowIcon />
+                    <ImageArrowIcon />
                 </NextImage>}
                 {this.state.imageCount!==1 &&<PreviousImage
-                  disabled={this.state.counter === 0}
-                  onClick={() => {
+                    disabled={this.state.counter === 0}
+                    onClick={() => {
                     this.setState((state) => {
-                      return { counter: this.state.counter - 1 };
+                        return { counter: this.state.counter - 1 };
                     });
-                  }}
+                    }}
                 >
-                  <ImageArrowIcon />
+                    <ImageArrowIcon />
                 </PreviousImage>}
-              </ImageContainer>
-            </Preview>
-          </Row>
-        </Grid>
-      </Item>
+            </ImageContainer>
+        </Preview>
     );
   }
 }
@@ -136,4 +106,4 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-export default connect(mapStateToProps, null)(CartItem);
+export default connect(mapStateToProps, null)(ItemImageSection);

@@ -117,7 +117,7 @@ class PLP extends Component {
             {this.props.categories.loadedCategory.products.map((item, i)=>{
             if(item.inStock){
                 return (
-                <ProductLink key={i} to={{ pathname: `/product/${this.props.categories.loadedCategory.name}/${item.id}`, state: { product: item} }} >
+                <ProductLink key={i} to={{ pathname: `/product/${item.id}`, state: { product: item} }} >
                     <ProductCard key={i}>
                     <ImageContainer>
                         <ProductImage src={item.gallery[0]}/>
@@ -138,7 +138,7 @@ class PLP extends Component {
                 </ProductLink>)
             }else{
                 return(
-                <ProductLink key={i} to={{ pathname: `/product/${this.props.categories.loadedCategory.name}/${item.id}`, state: { product: item} }} >
+                <ProductLink key={i} to={{ pathname: `/product/${item.id}`, state: { product: item} }} >
                     <ProductOutOfStockCard key={i}>
                     <ImageContainer>
                         <ProductImage src={item.gallery[0]}/>

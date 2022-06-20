@@ -27,7 +27,7 @@ export default class App extends Component {
             <Header />
             <Route exact path="/" to="/products/all" component={props => <Category {...props} category={'all'} />}/>
             <Route exact path="/products/:category"  component={Category} />
-            <Route path="/product/:category/:id" component={PDP} />
+            <Route path="/product/:id" component={PDP} />
             <Route path="/cart" component={Cart}/>
           </div>
         </Router>

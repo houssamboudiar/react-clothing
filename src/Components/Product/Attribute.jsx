@@ -18,14 +18,14 @@ const AttributeName = styled.p.attrs((props: { small: boolean }) => props)`
 
 const Items = styled.div``;
 
-const SizeItem = styled.button.attrs(
-  (props: { selected: boolean, disabled: boolean, small: boolean }) => props
+const Item = styled.button.attrs(
+  (props: { selected: boolean, disabled: boolean, small: boolean, capacity: boolean }) => props
 )`
   background: none;
   padding: 0;
   cursor: ${(props) => (props.disabled ? "default" : "pointer")};
   outline: inherit;
-  width: ${(props) => (props.small ? "24px" : "63px")};
+  width: ${(props) => (props.small ? (props.capacity ? "40px" : "24px") : "63px")};
   height: ${(props) => (props.small ? "24px" : "45px")};
   border: 1px solid black;
   color: ${(props) => (props.selected ? "white" : "black")};
@@ -38,31 +38,6 @@ const SizeItem = styled.button.attrs(
   &:hover {
     color: ${(props) => props.disabled ? (props.selected ? "white" : "black") : "white"};
     background-color: ${(props) => props.disabled ? (props.selected ? "black" : "white") : "black"};
-  }
-`;
-
-const CapacityItem = styled.button.attrs(
-  (props: { selected: boolean, disabled: boolean, small: boolean }) => props
-)`
-  background: none;
-  padding: 0;
-  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
-  outline: inherit;
-  width: ${(props) => (props.small ? "40px" : "63px")};
-  height: ${(props) => (props.small ? "24px" : "45px")};
-  border: 1px solid black;
-  color: ${(props) => (props.selected ? "white" : "black")};
-  background-color: ${(props) => (props.selected ? "black" : "white")};
-  opacity: ${(props) => (props.disabled ? 0.8 : 1)};
-  font-family: "Source Sans Pro", sans-serif;
-  font-size: ${(props) => (props.small ? "14px" : "16px")};
-  font-weight: 400;
-  margin-right: 12px;
-  &:hover {
-    color: ${(props) =>
-      props.disabled ? (props.selected ? "white" : "black") : "white"};
-    background-color: ${(props) =>
-      props.disabled ? (props.selected ? "black" : "white") : "black"};
   }
 `;
 
@@ -89,9 +64,6 @@ const Swatch = styled.button.attrs(
   font-weight: 400;
   margin-right: 12px;
 `;
-
-//Helper
-var hasNumber = /\d/;
 
 class Attribute extends Component {
   state = {
@@ -123,14 +95,60 @@ class Attribute extends Component {
   }
 
   render() {
-    if (this.props.attribute.id === "Size") {
-      return (
+    if (this.props.attribute.type === "swatch") {
+        return (
+            <OrderSection>
+            <AttributeName small={this.props.small}>
+                {this.props.attribute.name}:
+            </AttributeName>
+            <Items>
+                {this.props.attribute.items.map((item, i) => {
+                return (
+                    <Swatch
+                    small={this.props.small}
+                    key={item.id}
+                    onClick={() => {
+                        store.dispatch(
+                        setProduct(
+                            this.updateProductAttribute(
+                            this.selectAttribute(item.id, this.state.attribute),
+                            this.props.product.product
+                            )
+                        )
+                        );
+                        this.setState((state) => {
+                        return {
+                            selectedAttribute: {
+                            id: this.props.attribute.id,
+                            displayValue: item.displayValue,
+                            value: item.value,
+                            },
+                            attribute: this.selectAttribute(item.id, state.attribute),
+                        };
+                        });
+                    }}
+                    disabled={this.props.isCart || !this.props.inStock}
+                    selected={
+                        this.props.isCart
+                        ? item.selected
+                        : item.displayValue ===
+                            this.state.selectedAttribute.displayValue
+                    }
+                    color={item.value}
+                    ></Swatch>
+                );
+                })}
+            </Items>
+            </OrderSection>
+        );
+    }
+    return (
         <OrderSection>
           <AttributeName small={this.props.small}>{this.props.attribute.name}:</AttributeName>
           <Items>
             {this.props.attribute.items.map((item, i) => {
               return (
-                <SizeItem
+                <Item
                   small={this.props.small}
                   key={item.id}
                   onClick={() => {
@@ -154,6 +172,7 @@ class Attribute extends Component {
                     });
                   }}
                   disabled={this.props.isCart || !this.props.inStock}
+                  capacity={this.props.attribute.id==='Capacity'}
                   selected={
                     this.props.isCart
                       ? item.selected
@@ -161,178 +180,14 @@ class Attribute extends Component {
                         this.state.selectedAttribute.displayValue
                   }
                 >
-                  {hasNumber.test(item.displayValue) && item.displayValue}
-                  {!hasNumber.test(item.displayValue) &&
-                    item.displayValue === "Extra Large" &&
-                    "XL"}
-                  {!hasNumber.test(item.displayValue) &&
-                    item.displayValue === "Extra Small" &&
-                    "SM"}
-                  {!hasNumber.test(item.displayValue) &&
-                    item.displayValue !== "Extra Small" &&
-                    item.displayValue !== "Extra Large" &&
-                    item.displayValue[0]}
-                </SizeItem>
+                    {item.value}
+                </Item>
               );
             })}
           </Items>
         </OrderSection>
       );
     }
-    if (this.props.attribute.id === "Color") {
-      return (
-        <OrderSection>
-          <AttributeName small={this.props.small}>
-            {this.props.attribute.name}:
-          </AttributeName>
-          <Items>
-            {this.props.attribute.items.map((item, i) => {
-              return (
-                <Swatch
-                  small={this.props.small}
-                  key={item.id}
-                  onClick={() => {
-                    store.dispatch(
-                      setProduct(
-                        this.updateProductAttribute(
-                          this.selectAttribute(item.id, this.state.attribute),
-                          this.props.product.product
-                        )
-                      )
-                    );
-                    this.setState((state) => {
-                      return {
-                        selectedAttribute: {
-                          id: this.props.attribute.id,
-                          displayValue: item.displayValue,
-                          value: item.value,
-                        },
-                        attribute: this.selectAttribute(item.id, state.attribute),
-                      };
-                    });
-                  }}
-                  disabled={this.props.isCart || !this.props.inStock}
-                  selected={
-                    this.props.isCart
-                      ? item.selected
-                      : item.displayValue ===
-                        this.state.selectedAttribute.displayValue
-                  }
-                  color={item.value}
-                ></Swatch>
-              );
-            })}
-          </Items>
-        </OrderSection>
-      );
-    }
-    if (this.props.attribute.id === "Capacity") {
-      return (
-        <OrderSection>
-          <AttributeName small={this.props.small}>
-            {this.props.attribute.name}:
-          </AttributeName>
-          <Items>
-            {this.props.attribute.items.map((item, i) => {
-              return (
-                <CapacityItem
-                  small={this.props.small}
-                  key={item.id}
-                  onClick={() => {
-                    store.dispatch(
-                      setProduct(
-                        this.updateProductAttribute(
-                          this.selectAttribute(item.id, this.state.attribute),
-                          this.props.product.product
-                        )
-                      )
-                    );
-                    this.setState((state) => {
-                      return {
-                        selectedAttribute: {
-                          id: this.props.attribute.id,
-                          displayValue: item.displayValue,
-                          value: item.value,
-                        },
-                        attribute: this.selectAttribute(item.id, state.attribute),
-                      };
-                    });
-                  }}
-                  disabled={this.props.isCart || !this.props.inStock}
-                  selected={
-                    this.props.isCart
-                      ? item.selected
-                      : item.displayValue ===
-                        this.state.selectedAttribute.displayValue
-                  }
-                >
-                  {hasNumber.test(item.displayValue) && item.displayValue}
-                </CapacityItem>
-              );
-            })}
-          </Items>
-        </OrderSection>
-      );
-    }
-    if (
-      this.props.attribute.items[0].id === "Yes" &&
-      this.props.attribute.items[1].id === "No"
-    ) {
-      return (
-        <OrderSection>
-          <AttributeName small={this.props.small}>
-            {this.props.attribute.name}:
-          </AttributeName>
-          <Items>
-            {this.props.attribute.items.map((item, i) => {
-              return (
-                <SizeItem
-                  small={this.props.small}
-                  key={item.id}
-                  onClick={() => {
-                    store.dispatch(
-                      setProduct(
-                        this.updateProductAttribute(
-                          this.selectAttribute(item.id, this.state.attribute),
-                          this.props.product.product
-                        )
-                      )
-                    );
-                    this.setState((state) => {
-                      return {
-                        selectedAttribute: {
-                          id: this.props.attribute.id,
-                          displayValue: item.displayValue,
-                          value: item.value,
-                        },
-                        attribute: this.selectAttribute(item.id, state.attribute),
-                      };
-                    });
-                  }}
-                  disabled={this.props.isCart || !this.props.inStock}
-                  selected={
-                    this.props.isCart
-                      ? item.selected
-                      : item.displayValue ===
-                        this.state.selectedAttribute.displayValue
-                  }
-                >
-                  {item.displayValue.toUpperCase()}
-                </SizeItem>
-              );
-            })}
-          </Items>
-        </OrderSection>
-      );
-    }
-    return (
-      <OrderSection>
-        <h1>Unknown Attribute</h1>
-        <h1>{this.props.attribute.name}</h1>
-        <h1>{this.props.attribute.type}</h1>
-      </OrderSection>
-    );
-  }
 }
 
 const mapStateToProps = (state, props) => {

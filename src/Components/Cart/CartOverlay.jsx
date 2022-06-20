@@ -119,14 +119,14 @@ class CartOverlay extends Component {
         </OrderInfo>
 
         <BtnGroup>
-          <ViewBag>
-            <CartLink
-              onClick={() => this.props.setShowCart(!this.props.cart.showCart)}
-              to={{ pathname: `/cart` }}
-            >
-              VIEW BAG
-            </CartLink>
-          </ViewBag>
+          <CartLink
+            onClick={() => this.props.setShowCart(!this.props.cart.showCart)}
+            to={{ pathname: `/cart` }}
+          >
+            <ViewBag onClick={() => this.props.setShowCart(!this.props.cart.showCart)}>
+                VIEW BAG
+            </ViewBag>
+          </CartLink>
           <Checkout onClick={() => this.props.onCheckout()}>
             <CheckLink
               onClick={(e) => e.preventDefault()}

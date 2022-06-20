@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { ReactComponent as ArrowUp } from "./../Assets/arrow-up.svg";
-import { setCurrency } from "../Store/redux/reducers/currencies";
-import { setCartCurrency } from "../Store/redux/reducers/cart";
-import { setShowCurrency } from "../Store/redux/reducers/currencies";
-import { setShowCart } from "../Store/redux/reducers/cart";
-/* The container <div> - needed to position the dropdown content */
+import { ReactComponent as ArrowUp } from "./../../Assets/arrow-up.svg";
+import { setShowCurrency } from "../../Store/redux/reducers/currencies";
+import { setShowCart } from "../../Store/redux/reducers/cart";
+import CurrencyList from "./CurrencyList";
+
 const SwitcherDiv = styled.div`
   position: relative;
   display: inline - block;
@@ -46,15 +45,6 @@ const SwitcherButton = styled.button`
 
 const Container = styled.div``;
 
-const Currency = styled.div`
-  font-weight: 500 !important;
-  padding: 5px 10px;
-  cursor: pointer;
-  &:hover {
-    background-color: #eee;
-  }
-`;
-
 const ArrowUpStyled = styled(ArrowUp)`
   line-height: 28.8px;
   margin-left: 9px;
@@ -65,11 +55,10 @@ const ArrowUpStyled = styled(ArrowUp)`
   transform: ${(props) => (props.isopen ? "rotate(0deg)" : "rotate(180deg)")};
 `;
 
-class CurrencyList extends Component {
+class CurrencySwitcher extends Component {
   render() {
     return (
       <Container>
-        {/* rEDUCER cURRENCY vALUE */}
         <SwitcherButton
           onClick={() => {
             this.props.setShowCurrency(!this.props.currencies.showCurrency);
@@ -80,29 +69,9 @@ class CurrencyList extends Component {
           <ArrowUpStyled isopen={+this.props.currencies.showCurrency} />
         </SwitcherButton>
         <SwitcherDiv>
-          {/* // Currency */}
           {this.props.currencies.showCurrency && (
             <SwitcherContent>
-              {this.props.currencies.currencies.map((item, i) => {
-                // eslint-disable-next-line
-                return (
-                  <Currency
-                    key={i}
-                    onClick={() => {
-                      this.props.setCurrency(item);
-                      this.props.setCartCurrency(item);
-                      this.props.setShowCurrency(
-                        !this.props.currencies.showCurrency
-                      );
-                    }}
-                  >
-                    <a onClick={(e)=>e.preventDefault()} href="/#">
-                      {item.symbol} {item.label}
-                    </a>
-                    <br />
-                  </Currency>
-                );
-              })}
+              <CurrencyList />
             </SwitcherContent>
           )}
         </SwitcherDiv>
@@ -119,8 +88,6 @@ const mapStateToProps = (state, props) => {
 };
 
 export default connect(mapStateToProps, {
-  setCurrency,
-  setCartCurrency,
   setShowCurrency,
   setShowCart,
-})(CurrencyList);
+})(CurrencySwitcher);

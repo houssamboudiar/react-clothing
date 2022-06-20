@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route} from "react-router-dom";
-import Header from './Components/Header';
+import Header from './Components/Header/Header';
 import { store } from './Store/store';
 import {fetchCategories} from './Store/redux/reducers/categories';
 import PDP from './Components/Product/PDP';

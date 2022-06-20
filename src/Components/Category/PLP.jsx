@@ -18,7 +18,7 @@ const AddCartButton = styled.button`
   height: 52px;
   position: absolute;
   bottom: 57px;
-  left: 305px;
+  left: 300px;
   filter: drop-shadow(0px 4px 11px rgba(29, 31, 34, 0.2));
   opacity: 0;
   display: flex;

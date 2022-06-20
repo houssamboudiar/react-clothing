@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { ReactComponent as CartIcon } from "./../Assets/cart.svg";
+import { ReactComponent as CartIcon } from "./../../Assets/cart.svg";
 import { NavLink } from "react-router-dom/cjs/react-router-dom";
-import { fetchCurrencies } from "../Store/redux/reducers/currencies";
-import { setShowCurrency } from "../Store/redux/reducers/currencies";
-import { setShowCart } from "../Store/redux/reducers/cart";
-import { fetchProductsByCategory } from '../Store/redux/reducers/categories';
+import { fetchCurrencies } from "../../Store/redux/reducers/currencies";
+import { setShowCurrency } from "../../Store/redux/reducers/currencies";
+import { setShowCart } from "../../Store/redux/reducers/cart";
+import { fetchProductsByCategory } from '../../Store/redux/reducers/categories';
 import CurrencySwitcher from "./CurrencySwitcher";
-import CartOverlay from "./Cart/CartOverlay";
+import CartOverlay from "../Cart/CartOverlay";
 
 const Surface = styled.div`
   display: flex;

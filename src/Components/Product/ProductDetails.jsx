@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import AttributeList from "./AttributeList";
-
+import removeProductCart from './../../Store/redux/reducers/cart'
+import { store } from "../../Store/store";
 const Order = styled.div``;
 
 const OrderSection = styled.div``;
@@ -27,7 +28,30 @@ const PriceValue = styled.p.attrs((props: { small: boolean }) => props)`
   padding-bottom: 10px;
 `;
 
-class CartItem extends Component {
+const LabelDiv = styled.div`
+  padding-top: 5px;
+  padding-bottom: 5px;
+`;
+
+const Label = styled.span`
+  color: white;
+  padding: 8px;
+  background-color: #f44336d3;
+  border-radius: 20px;
+`;
+
+const RemoveButton = styled.button`
+    border: none;
+    color: #fff;
+    background-color: #f44336df;
+    cursor: pointer;
+    width: ${(props) => (props.small ? "100px" : "130px")};
+    height: ${(props) => (props.small ? "24px" : "45px")};
+    font-size: ${(props) => (props.small ? "12px" : "16px")};
+    margin-top: ${(props) => (props.small ? "10px" : "29px")};
+`;
+
+class ProductDetails extends Component {
   render() {
     return (
       <Order>
@@ -36,6 +60,11 @@ class CartItem extends Component {
           <Subheading small={this.props.small}>
             {this.props.product.name}
           </Subheading>
+          {!this.props.inStock&&!this.props.isCart&&<LabelDiv>
+            <Label small={this.props.small}>
+          Out of stock
+          </Label>
+          </LabelDiv>}
           {this.props.isCart && (
             <PriceValue small={this.props.small}>
               {this.props.currencies.currentCurrency.symbol}
@@ -55,6 +84,15 @@ class CartItem extends Component {
               inStock={this.props.inStock}
               small={this.props.small} 
         />
+        {this.props.isCart &&<RemoveButton
+            small={this.props.small} 
+            onClick={() => {
+              console.log(this.props.cart)
+              store.dispatch({payload:this.props.product,type:'cart/removeProductCart'})
+            }}
+            >
+            REMOVE ITEM
+        </RemoveButton>}
         {this.props.pricePDP}
       </Order>
     );
@@ -64,7 +102,8 @@ class CartItem extends Component {
 const mapStateToProps = (state, props) => {
   return {
     currencies: state.currencies,
+    cart: state.cart,
   };
 };
 
-export default connect(mapStateToProps, null)(CartItem);
+export default connect(mapStateToProps, {removeProductCart})(ProductDetails);

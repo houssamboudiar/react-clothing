@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { addProductCart } from '../../Store/redux/reducers/cart';
-import { setProduct } from "../../Store/redux/reducers/product";
+import { fetchProductById, setProduct } from "../../Store/redux/reducers/product";
 import ProductDetails from './ProductDetails';
 import { store } from "../../Store/store";
 import ProductImageSection from './ProductImageSection';
@@ -28,36 +28,29 @@ export function initProductState(product){
 };
 
 class PDP extends Component {
-  state = {
-    product: {
-      ...initProductState(this.props.location.state.product),
-    },
-  };
 
   componentDidMount() {
-    store.dispatch(
-      setProduct({...initProductState(this.props.location.state.product)})
-    );
+    store.dispatch(fetchProductById(this.props.match.params.id))
   }
 
   render() {
-    if (!this.props.categories.loading === "succeeded") {
+    if (this.props.product.loading === 'pending') {
       return (
         <div className="loading">
           <div className="loader"></div>
         </div>
       );
-    } else {
+    } 
+    if(this.props.product.loading === 'succeeded') {
       return (
         <Wrap>
-          <ProductImageSection gallery={this.state.product.gallery} />
+          <ProductImageSection gallery={this.props.product.product.gallery} />
           <ProductDetails
-            product={this.state.product}
+            product={this.props.product.product}
             isCart={false}
-            inStock={this.state.product.inStock}
-            pricePDP={<ProductOrderSection initProduct={this.state.product} />}>
+            inStock={this.props.product.product.inStock}
+            pricePDP={<ProductOrderSection initProduct={this.props.product.product} />}>
           </ProductDetails>
-
         </Wrap>
       );
     }

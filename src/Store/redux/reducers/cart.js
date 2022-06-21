@@ -8,7 +8,7 @@ const initialState = {
     showCart:false,
 }
 
-function computeCartTotal(products, currencies) {
+const computeCartTotal = (products, currencies) => {
     let total = 0;
     if (products.length === 0) {
         return total;
@@ -23,6 +23,20 @@ function computeCartTotal(products, currencies) {
         return product;
     });
     return total;
+}
+
+const computeQTE = (products) => {
+    let counter = 0;
+    if (products.length === 0) {
+        return counter;
+    }
+    products.map((product) => {
+        counter =
+        counter +
+            product.qte
+        return product;
+    });
+    return counter;
 }
 
 const cartSlice = createSlice({
@@ -78,8 +92,16 @@ const cartSlice = createSlice({
             state.showCart = initialState.showCart;
         },
     },
+    extraReducers: {
+        'cart/removeProductCart': (state, action) => {
+            console.log(action)
+            state.products = state.products.filter((p)=> p.id!==action.payload.id || JSON.stringify(p.attributes) !== JSON.stringify(action.payload.attributes))
+            state.counter = computeQTE(state.products);
+            state.total = computeCartTotal(state.products, state.currentCurrency);
+        },
+    },
 })
 
-export const { addProductCart, addProductCategory, increaseProductQte, decreaseProductQte, setCartCurrency, setShowCart, onCheckout} = cartSlice.actions
+export const { removeProductCart, addProductCart, addProductCategory, increaseProductQte, decreaseProductQte, setCartCurrency, setShowCart, onCheckout} = cartSlice.actions
 
 export default cartSlice.reducer;

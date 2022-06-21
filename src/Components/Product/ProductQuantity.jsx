@@ -69,6 +69,7 @@ class ProductQuantity extends Component {
         </IncreaseButton>
         <Counter small={+this.props.small}>{this.props.product.qte}</Counter>
         <DecreaseButton
+          disabled={this.props.product.qte === 1}
           onClick={() => {
             this.props.decreaseProductQte(this.props.product);
           }}

@@ -94,7 +94,6 @@ const cartSlice = createSlice({
     },
     extraReducers: {
         'cart/removeProductCart': (state, action) => {
-            console.log(action)
             state.products = state.products.filter((p)=> p.id!==action.payload.id || JSON.stringify(p.attributes) !== JSON.stringify(action.payload.attributes))
             state.counter = computeQTE(state.products);
             state.total = computeCartTotal(state.products, state.currentCurrency);

@@ -87,7 +87,6 @@ class ProductDetails extends Component {
         {this.props.isCart &&<RemoveButton
             small={this.props.small} 
             onClick={() => {
-              console.log(this.props.cart)
               store.dispatch({payload:this.props.product,type:'cart/removeProductCart'})
             }}
             >

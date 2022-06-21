@@ -18,15 +18,6 @@ const Wrap = styled.div`
     padding-right: 80px;
     padding-bottom: 80px;
 `
-
-export function initProductState(product){
-  const clone = JSON.parse(JSON.stringify(product));
-  clone.attributes.map((e) => (e.items.map((l, index) => {
-    return (index===0) ? l.selected = true : l.selected = false;
-  })));
-  return clone;
-};
-
 class PDP extends Component {
 
   componentDidMount() {

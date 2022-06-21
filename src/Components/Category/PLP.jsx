@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom/cjs/react-router-dom';
 import styled from 'styled-components';
 import { addProductCategory } from '../../Store/redux/reducers/cart';
 import { ReactComponent as CartIcon} from './../../Assets/cartwhite.svg'
-import { initProductState } from '../Product/PDP';
 
 const AddCartButton = styled.button`
   padding: 0;
@@ -110,6 +109,15 @@ const Grid = styled.div`
 `;
 
 class PLP extends Component {
+  
+  initProductState = (product) => {
+    const clone = JSON.parse(JSON.stringify(product));
+    clone.attributes.map((e) => (e.items.map((l, index) => {
+      return (index===0) ? l.selected = true : l.selected = false;
+    })));
+    return clone;
+  };
+
   render() {
         return (
         <Grid>
@@ -122,7 +130,7 @@ class PLP extends Component {
                         <ProductImage src={item.gallery[0]}/>
                     </ImageContainer>                      
                     <AddCartButton  onClick={(e)=>{
-                        this.props.addProductCategory(initProductState({...item, qte:1}));
+                        this.props.addProductCategory(this.initProductState({...item, qte:1}));
                         e.preventDefault();}}><CartIconStyled /></AddCartButton>
                     <Content>
                         <ProductName>

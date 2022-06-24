@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import AttributeList from "./AttributeList";
-import removeProductCart from './../../Store/redux/reducers/cart'
-import { store } from "../../Store/store";
 const Order = styled.div``;
 
 const OrderSection = styled.div``;
@@ -40,17 +38,6 @@ const Label = styled.span`
   border-radius: 20px;
 `;
 
-const RemoveButton = styled.button`
-    border: none;
-    color: #fff;
-    background-color: #f44336df;
-    cursor: pointer;
-    width: ${(props) => (props.small ? "100px" : "130px")};
-    height: ${(props) => (props.small ? "24px" : "45px")};
-    font-size: ${(props) => (props.small ? "12px" : "16px")};
-    margin-top: ${(props) => (props.small ? "10px" : "29px")};
-`;
-
 class ProductDetails extends Component {
   render() {
     return (
@@ -84,14 +71,6 @@ class ProductDetails extends Component {
               inStock={this.props.inStock}
               small={this.props.small} 
         />
-        {this.props.isCart &&<RemoveButton
-            small={this.props.small} 
-            onClick={() => {
-              store.dispatch({payload:this.props.product,type:'cart/removeProductCart'})
-            }}
-            >
-            REMOVE ITEM
-        </RemoveButton>}
         {this.props.pricePDP}
       </Order>
     );
@@ -105,4 +84,4 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-export default connect(mapStateToProps, {removeProductCart})(ProductDetails);
+export default connect(mapStateToProps, null)(ProductDetails);

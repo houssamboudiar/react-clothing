@@ -7,6 +7,7 @@ import {
 } from "../../Store/redux/reducers/cart";
 import { ReactComponent as IncreaseIcon } from "./../../Assets/plus-square.svg";
 import { ReactComponent as DecreaseIcon } from "./../../Assets/minus-square.svg";
+import { store } from "../../Store/store";
 
 const Quantity = styled.div`
   flex: 0.5;
@@ -69,9 +70,13 @@ class ProductQuantity extends Component {
         </IncreaseButton>
         <Counter small={+this.props.small}>{this.props.product.qte}</Counter>
         <DecreaseButton
-          disabled={this.props.product.qte === 1}
           onClick={() => {
-            this.props.decreaseProductQte(this.props.product);
+            if(this.props.product.qte === 1){
+              console.log('remove here!')
+              store.dispatch({payload:this.props.product,type:'cart/removeProductCart'})
+            }else{
+              this.props.decreaseProductQte(this.props.product);
+            }
           }}
         >
           <Decrease small={+this.props.small} />

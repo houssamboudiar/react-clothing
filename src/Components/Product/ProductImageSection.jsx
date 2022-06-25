@@ -33,6 +33,27 @@ const ImageContainer = styled.div`
   color: white;
 `
 
+const ProductOutOfStockCard = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  padding: 0.5rem;
+  background-color: #FFF;
+  &:hover{
+    box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+  }
+  opacity:50% ;
+`;
+
+const OutOfStockText = styled.p`
+  font-size:24px ;
+  font-weight:400 ;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`
+
 class ProductImageSection extends Component {
     state = {
         currentImage: this.props.gallery[0],
@@ -57,9 +78,16 @@ class ProductImageSection extends Component {
                 );
                 })}
             </Images>
-            <ImageContainer>
-                <ProductImage src={this.state.currentImage} />
-            </ImageContainer>
+              <ImageContainer>
+                {!this.props.inStock&&
+                <ProductOutOfStockCard>
+                      <ProductImage src={this.state.currentImage} />
+                      <OutOfStockText>OUT OF STOCK</OutOfStockText>
+                </ProductOutOfStockCard>}
+                {this.props.inStock&&
+                      <ProductImage src={this.state.currentImage} />
+                }
+              </ImageContainer>
             </>
         );
         }

@@ -35,11 +35,13 @@ class PDP extends Component {
     if(this.props.product.loading === 'succeeded') {
       return (
         <Wrap>
-          <ProductImageSection gallery={this.props.product.product.gallery} />
+          <ProductImageSection             
+            inStock={this.props.product.product.inStock}
+            gallery={this.props.product.product.gallery} 
+          />
           <ProductDetails
             product={this.props.product.product}
             isCart={false}
-            inStock={this.props.product.product.inStock}
             pricePDP={<ProductOrderSection initProduct={this.props.product.product} />}>
           </ProductDetails>
         </Wrap>

@@ -26,18 +26,6 @@ const PriceValue = styled.p.attrs((props: { small: boolean }) => props)`
   padding-bottom: 10px;
 `;
 
-const LabelDiv = styled.div`
-  padding-top: 5px;
-  padding-bottom: 5px;
-`;
-
-const Label = styled.span`
-  color: white;
-  padding: 8px;
-  background-color: #f44336d3;
-  border-radius: 20px;
-`;
-
 class ProductDetails extends Component {
   render() {
     return (
@@ -47,11 +35,6 @@ class ProductDetails extends Component {
           <Subheading small={this.props.small}>
             {this.props.product.name}
           </Subheading>
-          {!this.props.inStock&&!this.props.isCart&&<LabelDiv>
-            <Label small={this.props.small}>
-          Out of stock
-          </Label>
-          </LabelDiv>}
           {this.props.isCart && (
             <PriceValue small={this.props.small}>
               {this.props.currencies.currentCurrency.symbol}

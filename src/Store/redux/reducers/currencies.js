@@ -17,17 +17,52 @@ const getCurrenciesQuery = `
 }
 `
 
+// export const fetchCurrencies = createAsyncThunk('currencies/fetchCurrencies', async () => {
+//   const response = fetch('http://localhost:4000/graphql', {
+//       method: 'POST',
+//       headers: {
+//           "Content-Type": "application/json"
+//       },
+//       body: JSON.stringify(
+//           {query: getCurrenciesQuery}
+//       )})
+//   .then(function (response) {
+//       return response.json()})
+//   .then(function (json) {
+//       return json.data.currencies})
+//   .catch(function (error) {
+//       console.log('error', error)})
+//   return response
+// })
+
+// Netlify Deployment
 export const fetchCurrencies = createAsyncThunk('currencies/fetchCurrencies', async () => {
-  const response = fetch('http://localhost:4000/graphql', {
-      method: 'POST',
-      headers: {
-          "Content-Type": "application/json"
-      },
-      body: JSON.stringify(
-          {query: getCurrenciesQuery}
-      )})
-  .then(function (response) {
-      return response.json()})
+  const response = Promise.resolve({
+    "data": {
+      "currencies": [
+        {
+          "label": "USD",
+          "symbol": "$"
+        },
+        {
+          "label": "GBP",
+          "symbol": "£"
+        },
+        {
+          "label": "AUD",
+          "symbol": "A$"
+        },
+        {
+          "label": "JPY",
+          "symbol": "¥"
+        },
+        {
+          "label": "RUB",
+          "symbol": "₽"
+        }
+      ]
+    }
+  })
   .then(function (json) {
       return json.data.currencies})
   .catch(function (error) {

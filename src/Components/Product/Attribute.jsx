@@ -127,7 +127,7 @@ class Attribute extends Component {
                         };
                         });
                     }}
-                    disabled={this.props.isCart || !this.props.inStock}
+                    disabled={this.props.isCart && !this.props.inStock}
                     selected={
                         this.props.isCart
                         ? item.selected
@@ -171,7 +171,7 @@ class Attribute extends Component {
                       };
                     });
                   }}
-                  disabled={this.props.isCart || !this.props.inStock}
+                  disabled={this.props.isCart && this.props.inStock}
                   capacity={this.props.attribute.id==='Capacity'}
                   selected={
                     this.props.isCart

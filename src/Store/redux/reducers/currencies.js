@@ -7,7 +7,7 @@ const initialState = {
   showCurrency: false,
   error: '',
 }
-
+// eslint-disable-next-line
 const getCurrenciesQuery = `
 {
 	currencies{
